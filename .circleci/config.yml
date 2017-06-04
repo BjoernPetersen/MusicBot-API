@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+    - image: openjdk:8-jre
+    working_directory: ~/app
+    steps:
+    - checkout
+    - deploy:
+        command: |
+          wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar -O swagger-codegen-cli.jar
+          java -jar swagger-codegen-cli.jar generate -i swagger.yaml -o docs -l html2
+        name: Building docs
+    - store_artifacts:
+        path: docs/index.html
