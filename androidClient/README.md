@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.github.bjoernpetersen</groupId>
     <artifactId>jmusicbot-android-client</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.3.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.github.bjoernpetersen:jmusicbot-android-client:0.3.0-SNAPSHOT"
+compile "com.github.bjoernpetersen:jmusicbot-android-client:0.3.0"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/jmusicbot-android-client-0.3.0-SNAPSHOT.jar
+* target/jmusicbot-android-client-0.3.0.jar
 * target/lib/*.jar
 
 ## Getting Started
