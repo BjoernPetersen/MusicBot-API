@@ -6,8 +6,8 @@
 	"hideGenerationTimestamp":"true",
 
 	"groupId":"com.github.bjoernpetersen",
-	"artifactId":"jmusicbot-android-client",
-	"artifactVersion":"0.3.0",
+	"artifactId":"musicbot-android-client",
+	"artifactVersion":"0.4.0-SNAPSHOT",
 	"artifactDescription":"JMusicBot android client library",
 	"scmConnection":"scm:git:https://github.com/BjoernPetersen/JMusicBot-API.git",
 	"scmDeveloperConnection":"scm:git:git@github.com:BjoernPetersen/JMusicBot-API.git",
