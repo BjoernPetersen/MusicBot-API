@@ -440,6 +440,10 @@ paths:
           description: Not authenticated
           schema:
             type: string
+        '403':
+          description: Missing 'dislike' permission
+          schema:
+            type: string
         '404':
           description: Song or Provider not found.
           schema:
