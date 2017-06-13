@@ -144,11 +144,15 @@ paths:
             type: string
             format: password
         '400':
-          description: Wrong password/uuid
+          description: Wrong uuid
           schema:
             type: string
         '401':
           description: Needs password or uuid parameter
+          schema:
+            type: string
+        '403':
+          description: Wrong password
           schema:
             type: string
         '404':
