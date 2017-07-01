@@ -1,4 +1,4 @@
-# jmusicbot-android-client
+# musicbot-android-client
 
 ## Requirements
 
@@ -27,8 +27,8 @@ Add this dependency to your project's POM:
 ```xml
 <dependency>
     <groupId>com.github.bjoernpetersen</groupId>
-    <artifactId>jmusicbot-android-client</artifactId>
-    <version>0.3.0</version>
+    <artifactId>musicbot-android-client</artifactId>
+    <version>0.4.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.github.bjoernpetersen:jmusicbot-android-client:0.3.0"
+compile "com.github.bjoernpetersen:musicbot-android-client:0.4.0"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/jmusicbot-android-client-0.3.0.jar
+* target/musicbot-android-client-0.4.0.jar
 * target/lib/*.jar
 
 ## Getting Started
