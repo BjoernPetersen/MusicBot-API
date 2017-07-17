@@ -255,7 +255,7 @@ No authorization required
 
 <a name="getProviders"></a>
 # **getProviders**
-> List&lt;String&gt; getProviders()
+> List&lt;NamedPlugin&gt; getProviders()
 
 Returns a list of all available providers
 
@@ -268,7 +268,7 @@ Returns a list of all available providers
 
 DefaultApi apiInstance = new DefaultApi();
 try {
-    List<String> result = apiInstance.getProviders();
+    List<NamedPlugin> result = apiInstance.getProviders();
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#getProviders");
@@ -281,7 +281,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List&lt;String&gt;**
+[**List&lt;NamedPlugin&gt;**](NamedPlugin.md)
 
 ### Authorization
 
@@ -333,7 +333,7 @@ No authorization required
 
 <a name="getSuggesters"></a>
 # **getSuggesters**
-> List&lt;String&gt; getSuggesters()
+> List&lt;NamedPlugin&gt; getSuggesters()
 
 Returns a list of all available suggesters
 
@@ -346,7 +346,7 @@ Returns a list of all available suggesters
 
 DefaultApi apiInstance = new DefaultApi();
 try {
-    List<String> result = apiInstance.getSuggesters();
+    List<NamedPlugin> result = apiInstance.getSuggesters();
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#getSuggesters");
@@ -359,7 +359,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List&lt;String&gt;**
+[**List&lt;NamedPlugin&gt;**](NamedPlugin.md)
 
 ### Authorization
 

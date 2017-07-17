@@ -14,6 +14,7 @@
 package com.github.bjoernpetersen.jmusicbot.client.api;
 
 import com.github.bjoernpetersen.jmusicbot.client.ApiException;
+import com.github.bjoernpetersen.jmusicbot.client.model.NamedPlugin;
 import com.github.bjoernpetersen.jmusicbot.client.model.PlayerState;
 import com.github.bjoernpetersen.jmusicbot.client.model.QueueEntry;
 import com.github.bjoernpetersen.jmusicbot.client.model.Song;
@@ -128,7 +129,7 @@ public class DefaultApiTest {
      */
     @Test
     public void getProvidersTest() throws ApiException {
-        List<String> response = api.getProviders();
+        List<NamedPlugin> response = api.getProviders();
 
         // TODO: test validations
     }
@@ -158,7 +159,7 @@ public class DefaultApiTest {
      */
     @Test
     public void getSuggestersTest() throws ApiException {
-        List<String> response = api.getSuggesters();
+        List<NamedPlugin> response = api.getSuggesters();
 
         // TODO: test validations
     }
