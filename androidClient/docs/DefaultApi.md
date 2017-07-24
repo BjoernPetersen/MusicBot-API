@@ -118,7 +118,7 @@ No authorization required
 
 <a name="dequeue"></a>
 # **dequeue**
-> List&lt;QueueEntry&gt; dequeue(authorization, queueEntry)
+> List&lt;QueueEntry&gt; dequeue(authorization, songId, providerId)
 
 Removes a Song from the queue
 
@@ -133,9 +133,10 @@ Removes the specified Song from the current queue. If the queue did not contain 
 
 DefaultApi apiInstance = new DefaultApi();
 String authorization = "authorization_example"; // String | Authorization token with 'skip' permission
-QueueEntry queueEntry = new QueueEntry(); // QueueEntry | the queue entry to dequeue
+String songId = "songId_example"; // String | the song ID of the song to dequeue
+String providerId = "providerId_example"; // String | the provider ID of the song to dequeue
 try {
-    List<QueueEntry> result = apiInstance.dequeue(authorization, queueEntry);
+    List<QueueEntry> result = apiInstance.dequeue(authorization, songId, providerId);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#dequeue");
@@ -148,7 +149,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authorization** | **String**| Authorization token with &#39;skip&#39; permission |
- **queueEntry** | [**QueueEntry**](QueueEntry.md)| the queue entry to dequeue |
+ **songId** | **String**| the song ID of the song to dequeue |
+ **providerId** | **String**| the provider ID of the song to dequeue |
 
 ### Return type
 
