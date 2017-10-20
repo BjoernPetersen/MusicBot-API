@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.github.bjoernpetersen</groupId>
     <artifactId>musicbot-android-client</artifactId>
-    <version>0.6.0</version>
+    <version>0.7.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.github.bjoernpetersen:musicbot-android-client:0.6.0"
+compile "com.github.bjoernpetersen:musicbot-android-client:0.7.0"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/musicbot-android-client-0.6.0.jar
+* target/musicbot-android-client-0.7.0.jar
 * target/lib/*.jar
 
 ## Getting Started
@@ -102,6 +102,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**getSuggesters**](docs/DefaultApi.md#getSuggesters) | **GET** /suggester | Returns a list of all available suggesters
 *DefaultApi* | [**login**](docs/DefaultApi.md#login) | **GET** /user | Retrieves a token for a user
 *DefaultApi* | [**lookupSong**](docs/DefaultApi.md#lookupSong) | **GET** /provider/{providerId}/{songId} | Looks up a song
+*DefaultApi* | [**moveEntry**](docs/DefaultApi.md#moveEntry) | **PUT** /player/queue/order | Moves a song entry to another index in the queue
 *DefaultApi* | [**nextSong**](docs/DefaultApi.md#nextSong) | **PUT** /player/next | Skips to the next song
 *DefaultApi* | [**pausePlayer**](docs/DefaultApi.md#pausePlayer) | **PUT** /player/pause | Pauses the player
 *DefaultApi* | [**registerUser**](docs/DefaultApi.md#registerUser) | **POST** /user | Registers a new user

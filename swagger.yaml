@@ -350,6 +350,10 @@ paths:
           description: Invalid or missing Authorization token
           schema:
             type: string
+        '403':
+          description: Not authorized
+          schema:
+            type: string
   /provider:
     get:
       operationId: getProviders

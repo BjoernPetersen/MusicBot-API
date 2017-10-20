@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**getSuggesters**](DefaultApi.md#getSuggesters) | **GET** /suggester | Returns a list of all available suggesters
 [**login**](DefaultApi.md#login) | **GET** /user | Retrieves a token for a user
 [**lookupSong**](DefaultApi.md#lookupSong) | **GET** /provider/{providerId}/{songId} | Looks up a song
+[**moveEntry**](DefaultApi.md#moveEntry) | **PUT** /player/queue/order | Moves a song entry to another index in the queue
 [**nextSong**](DefaultApi.md#nextSong) | **PUT** /player/next | Skips to the next song
 [**pausePlayer**](DefaultApi.md#pausePlayer) | **PUT** /player/pause | Pauses the player
 [**registerUser**](DefaultApi.md#registerUser) | **POST** /user | Registers a new user
@@ -468,6 +469,53 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="moveEntry"></a>
+# **moveEntry**
+> List&lt;QueueEntry&gt; moveEntry(authorization, index, entry)
+
+Moves a song entry to another index in the queue
+
+### Example
+```java
+// Import classes:
+//import com.github.bjoernpetersen.jmusicbot.client.ApiException;
+//import com.github.bjoernpetersen.jmusicbot.client.api.DefaultApi;
+
+
+DefaultApi apiInstance = new DefaultApi();
+String authorization = "authorization_example"; // String | Authorization token with 'move' permission
+Integer index = 56; // Integer | The index to move to
+QueueEntry entry = new QueueEntry(); // QueueEntry | The song entry to move.
+try {
+    List<QueueEntry> result = apiInstance.moveEntry(authorization, index, entry);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling DefaultApi#moveEntry");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Authorization token with &#39;move&#39; permission |
+ **index** | **Integer**| The index to move to |
+ **entry** | [**QueueEntry**](QueueEntry.md)| The song entry to move. | [optional]
+
+### Return type
+
+[**List&lt;QueueEntry&gt;**](QueueEntry.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="nextSong"></a>
 # **nextSong**
 > PlayerState nextSong(authorization)
@@ -750,7 +798,7 @@ Returns a list of suggestions
 
 DefaultApi apiInstance = new DefaultApi();
 String suggesterId = "suggesterId_example"; // String | A suggester ID
-Integer max = 56; // Integer | The maximum size of the response. Defaults to 16.
+Integer max = 32; // Integer | The maximum size of the response. Defaults to 32.
 try {
     List<Song> result = apiInstance.suggestSong(suggesterId, max);
     System.out.println(result);
@@ -765,7 +813,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **suggesterId** | **String**| A suggester ID |
- **max** | **Integer**| The maximum size of the response. Defaults to 16. | [optional]
+ **max** | **Integer**| The maximum size of the response. Defaults to 32. | [optional] [default to 32]
 
 ### Return type
 
