@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**getProviders**](DefaultApi.md#getProviders) | **GET** /provider | Returns a list of all available providers
 [**getQueue**](DefaultApi.md#getQueue) | **GET** /player/queue | Returns the current player queue
 [**getSuggesters**](DefaultApi.md#getSuggesters) | **GET** /suggester | Returns a list of all available suggesters
-[**login**](DefaultApi.md#login) | **GET** /user | Retrieves a token for a user
+[**login**](DefaultApi.md#login) | **PUT** /token | Retrieves a token for a user
 [**lookupSong**](DefaultApi.md#lookupSong) | **GET** /provider/{providerId}/{songId} | Looks up a song
 [**moveEntry**](DefaultApi.md#moveEntry) | **PUT** /player/queue/order | Moves a song entry to another index in the queue
 [**nextSong**](DefaultApi.md#nextSong) | **PUT** /player/next | Skips to the next song
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 <a name="changePassword"></a>
 # **changePassword**
-> String changePassword(authorization, password, oldPassword)
+> String changePassword(authorization, passwordChange)
 
 Sets a new password
 
@@ -41,10 +41,9 @@ Sets a new password for the caller. If the user was a guest account, this makes 
 
 DefaultApi apiInstance = new DefaultApi();
 String authorization = "authorization_example"; // String | An authorization token
-String password = "password_example"; // String | A password
-String oldPassword = "oldPassword_example"; // String | The users old password. Only required if the user is no guest
+PasswordChange passwordChange = new PasswordChange(); // PasswordChange | The users old password (if he's no guest) and new password.
 try {
-    String result = apiInstance.changePassword(authorization, password, oldPassword);
+    String result = apiInstance.changePassword(authorization, passwordChange);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#changePassword");
@@ -57,8 +56,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **authorization** | **String**| An authorization token |
- **password** | **String**| A password |
- **oldPassword** | **String**| The users old password. Only required if the user is no guest | [optional]
+ **passwordChange** | [**PasswordChange**](PasswordChange.md)| The users old password (if he&#39;s no guest) and new password. |
 
 ### Return type
 
@@ -375,7 +373,7 @@ No authorization required
 
 <a name="login"></a>
 # **login**
-> String login(userName, password, uuid)
+> String login(credentials)
 
 Retrieves a token for a user
 
@@ -389,11 +387,9 @@ Retrieves an Authorization token for a user. Either a password or a UUID must be
 
 
 DefaultApi apiInstance = new DefaultApi();
-String userName = "userName_example"; // String | The user to log in as
-String password = "password_example"; // String | The users password. Guest users should use the uuid parameter.
-String uuid = "uuid_example"; // String | The UUID (or device ID) authenticating this guest user. Full users should use the password parameter.
+LoginCredentials credentials = new LoginCredentials(); // LoginCredentials | The user credentials to log in with.
 try {
-    String result = apiInstance.login(userName, password, uuid);
+    String result = apiInstance.login(credentials);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#login");
@@ -405,9 +401,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userName** | **String**| The user to log in as |
- **password** | **String**| The users password. Guest users should use the uuid parameter. | [optional]
- **uuid** | **String**| The UUID (or device ID) authenticating this guest user. Full users should use the password parameter. | [optional]
+ **credentials** | [**LoginCredentials**](LoginCredentials.md)| The user credentials to log in with. |
 
 ### Return type
 
@@ -604,7 +598,7 @@ No authorization required
 
 <a name="registerUser"></a>
 # **registerUser**
-> String registerUser(userName, uuid)
+> String registerUser(credentials)
 
 Registers a new user
 
@@ -618,10 +612,9 @@ Adds a new guest user to the database. The user is identified by his username.
 
 
 DefaultApi apiInstance = new DefaultApi();
-String userName = "userName_example"; // String | The desired user name
-String uuid = "uuid_example"; // String | A uuid (or device ID) to authenticate the user while he doesn't have a password
+RegisterCredentials credentials = new RegisterCredentials(); // RegisterCredentials | The new user's credentials.
 try {
-    String result = apiInstance.registerUser(userName, uuid);
+    String result = apiInstance.registerUser(credentials);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#registerUser");
@@ -633,8 +626,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **userName** | **String**| The desired user name |
- **uuid** | **String**| A uuid (or device ID) to authenticate the user while he doesn&#39;t have a password |
+ **credentials** | [**RegisterCredentials**](RegisterCredentials.md)| The new user&#39;s credentials. |
 
 ### Return type
 

@@ -28,7 +28,7 @@ Add this dependency to your project's POM:
 <dependency>
     <groupId>com.github.bjoernpetersen</groupId>
     <artifactId>musicbot-android-client</artifactId>
-    <version>0.7.0</version>
+    <version>0.8.0</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.github.bjoernpetersen:musicbot-android-client:0.7.0"
+compile "com.github.bjoernpetersen:musicbot-android-client:0.8.0"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/musicbot-android-client-0.7.0.jar
+* target/musicbot-android-client-0.8.0.jar
 * target/lib/*.jar
 
 ## Getting Started
@@ -72,10 +72,9 @@ public class DefaultApiExample {
         
         DefaultApi apiInstance = new DefaultApi();
         String authorization = "authorization_example"; // String | An authorization token
-        String password = "password_example"; // String | A password
-        String oldPassword = "oldPassword_example"; // String | The users old password. Only required if the user is no guest
+        PasswordChange passwordChange = new PasswordChange(); // PasswordChange | The users old password (if he's no guest) and new password.
         try {
-            String result = apiInstance.changePassword(authorization, password, oldPassword);
+            String result = apiInstance.changePassword(authorization, passwordChange);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#changePassword");
@@ -100,7 +99,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**getProviders**](docs/DefaultApi.md#getProviders) | **GET** /provider | Returns a list of all available providers
 *DefaultApi* | [**getQueue**](docs/DefaultApi.md#getQueue) | **GET** /player/queue | Returns the current player queue
 *DefaultApi* | [**getSuggesters**](docs/DefaultApi.md#getSuggesters) | **GET** /suggester | Returns a list of all available suggesters
-*DefaultApi* | [**login**](docs/DefaultApi.md#login) | **GET** /user | Retrieves a token for a user
+*DefaultApi* | [**login**](docs/DefaultApi.md#login) | **PUT** /token | Retrieves a token for a user
 *DefaultApi* | [**lookupSong**](docs/DefaultApi.md#lookupSong) | **GET** /provider/{providerId}/{songId} | Looks up a song
 *DefaultApi* | [**moveEntry**](docs/DefaultApi.md#moveEntry) | **PUT** /player/queue/order | Moves a song entry to another index in the queue
 *DefaultApi* | [**nextSong**](docs/DefaultApi.md#nextSong) | **PUT** /player/next | Skips to the next song
@@ -114,9 +113,12 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [LoginCredentials](docs/LoginCredentials.md)
  - [NamedPlugin](docs/NamedPlugin.md)
+ - [PasswordChange](docs/PasswordChange.md)
  - [PlayerState](docs/PlayerState.md)
  - [QueueEntry](docs/QueueEntry.md)
+ - [RegisterCredentials](docs/RegisterCredentials.md)
  - [Song](docs/Song.md)
  - [SongEntry](docs/SongEntry.md)
 
