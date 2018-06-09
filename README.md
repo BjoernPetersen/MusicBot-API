@@ -1,6 +1,9 @@
+# Warning
+The API is subject to major changes in the next iteration, so I strongly recommend not to base any work on the current iteration.
+
 # JMusicBot-API
 
-The API description for the JMusicBot written in Swagger / OpenAPI.   
+The API description for the JMusicBot written in Swagger.   
 For every final version an Android client library is generated. The latest one can be found in the [androidClient](androidClient) directory.
 
 ## Documentation
