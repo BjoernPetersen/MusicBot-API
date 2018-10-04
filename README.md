@@ -1,5 +1,7 @@
-# JMusicBot-API
+# JMusicBot-API ![GitHub (pre-)release](https://img.shields.io/github/release/BjoernPetersen/JMusicBot-API/all.svg)
 The OpenAPI specification for the [JMusicBot](https://github.com/BjoernPetersen/JMusicBot).
+
+**Note: This documentation applies to version 0.10.0, which has not been released yet.**
 
 ## Android client library
 TODO
