@@ -10,7 +10,7 @@ jobs:
         command: |
           wget http://central.maven.org/maven2/org/openapitools/openapi-generator-cli/3.3.0/openapi-generator-cli-3.3.0.jar -O openapi-generator-cli.jar
           java -jar openapi-generator-cli.jar generate -i musicbot.yaml -o docs -l html2
-        name: Building docs
+        name: Build docs
     - store_artifacts:
         path: docs/index.html
         destination: docs/index.html
