@@ -12,7 +12,7 @@ This is a tricky subject for the MusicBot, because the API is only available in 
 local network, which makes full `HTTPS` impossible. Another consideration is that
 client users should not have to worry too much about the authentication process.
 
-For most users, a `Guest` account ([see below](#Users)) is sufficent, which does not
+For most users, a `Guest` account ([see below](#users)) is sufficent, which does not
 require them to enter a password, but only to choose a name.
 Client implementations should not ask the user for a password, unless:
 - the user explicitly wishes to set a password
@@ -46,4 +46,4 @@ There are two types of users: `Guest` users and `Full` users.
 - can have additional permissions
 
 When registering a new user, first a `Guest` user is created.
-That user can then be converted to a `Full` user by setting a password ([see OpenAPI docs under `changePassword`](#Documentation)).
+That user can then be converted to a `Full` user by setting a password ([see OpenAPI docs under `changePassword`](#documentation)).
