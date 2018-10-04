@@ -13,4 +13,4 @@ jobs:
         name: Building docs
     - store_artifacts:
         path: docs/index.html
-        destination: docs
+        destination: docs/index.html
