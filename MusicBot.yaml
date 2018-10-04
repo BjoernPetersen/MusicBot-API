@@ -19,8 +19,9 @@ paths:
       security: []
       description: >
         Registers a new guest user. The user will be deleted when the bot is restarted.
-        Guest users can be upgraded by setting a password chosen by the user.
-        Users are distinguished by their username.
+        Guest users can be upgraded to full users, who will not be deleted,
+        by setting a password chosen by the user.
+        Users are identified by their username.
       requestBody:
         required: true
         description: The new user's credentials.
