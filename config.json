@@ -1,13 +1,13 @@
 {
-	"invokerPackage":"com.github.bjoernpetersen.jmusicbot.client",
-	"modelPackage":"com.github.bjoernpetersen.jmusicbot.client.model",
-	"apiPackage":"com.github.bjoernpetersen.jmusicbot.client.api",
+	"invokerPackage":"com.github.bjoernpetersen.musicbot.client",
+	"modelPackage":"com.github.bjoernpetersen.musicbot.client.model",
+	"apiPackage":"com.github.bjoernpetersen.musicbot.client.api",
 	"parcelableModel":"true",
 	"hideGenerationTimestamp":"true",
 
 	"groupId":"com.github.bjoernpetersen",
 	"artifactId":"musicbot-android-client",
-	"artifactVersion":"0.9.0",
+	"artifactVersion":"0.10.0",
 	"artifactDescription":"JMusicBot android client library",
 	"scmConnection":"scm:git:https://github.com/BjoernPetersen/JMusicBot-API.git",
 	"scmDeveloperConnection":"scm:git:git@github.com:BjoernPetersen/JMusicBot-API.git",

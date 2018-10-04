@@ -8,8 +8,9 @@ jobs:
     - checkout
     - deploy:
         command: |
-          wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.2/swagger-codegen-cli-2.2.2.jar -O swagger-codegen-cli.jar
-          java -jar swagger-codegen-cli.jar generate -i swagger.yaml -o docs -l html2
+          wget http://central.maven.org/maven2/org/openapitools/openapi-generator-cli/3.3.0/openapi-generator-cli-3.3.0.jar -O openapi-generator-cli.jar
+          java -jar openapi-generator-cli.jar generate -i musicbot.yaml -o docs -l html2
         name: Building docs
     - store_artifacts:
         path: docs/index.html
+        destination: docs
