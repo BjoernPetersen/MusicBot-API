@@ -135,50 +135,20 @@ paths:
           $ref: '#/components/responses/Unauthenticated'
         403:
           $ref: '#/components/responses/Unauthorized'
-  /player/pause:
     put:
-      operationId: pausePlayer
+      operationId: setPlayerState
       summary: Pauses the player.
       description: >
         Pauses the current playback. If the current player state is not PLAY,
         does nothing.
+      requestBody:
+        required: true
+        description: The desired player state change.
+        content:
+          $ref: '#/components/schemas/PlayerStateChange'
       responses:
         200:
-          description: A PlayerState
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlayerState'
-        401:
-          $ref: '#/components/responses/Unauthenticated'
-        403:
-          $ref: '#/components/responses/Unauthorized'
-  /player/play:
-    put:
-      operationId: resumePlayer
-      summary: Resumes the player
-      description: >
-        Pauses the current playback. If the current player state is not PAUSE,
-        does nothing.
-      responses:
-        200:
-          description: A PlayerState
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PlayerState'
-        401:
-          $ref: '#/components/responses/Unauthenticated'
-        403:
-          $ref: '#/components/responses/Unauthorized'
-  /player/next:
-    put:
-      operationId: nextSong
-      summary: Skips to the next song.
-      description: Skips the current song and plays the next song.
-      responses:
-        200:
-          description: A PlayerState
+          description: The new PlayerState.
           content:
             application/json:
               schema:
@@ -548,6 +518,17 @@ components:
             - ERROR
         songEntry:
           $ref: '#/components/schemas/SongEntry'
+    PlayerStateChange:
+      type: object
+      required:
+        - action
+      properties:
+        action:
+          type: string
+          enum:
+            - PLAY
+            - PAUSE
+            - SKIP
     SongEntry:
       type: object
       required:
