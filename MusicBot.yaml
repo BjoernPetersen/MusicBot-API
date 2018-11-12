@@ -187,6 +187,23 @@ paths:
           $ref: '#/components/responses/Unauthenticated'
         403:
           $ref: '#/components/responses/Unauthorized'
+  /player/queue/history:
+    get:
+      operationId: getRecentQueue
+      summary: Returns a list of recently played songs.
+      responses:
+        200:
+          description: A list of song entries. Sorted least to most recently played.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SongEntry'
+        401:
+          $ref: '#/components/responses/Unauthenticated'
+        403:
+          $ref: '#/components/responses/Unauthorized'
   /player/queue:
     get:
       operationId: getQueue
@@ -500,7 +517,7 @@ components:
           $ref: '#/components/schemas/NamedPlugin'
         title:
           type: string
-          description: 'The title of a song, most important identifier for human readers.'
+          description: The title of a song. Most important identifier for human readers.
           example: Never gonna give you up
           minLength: 1
         description:
@@ -547,16 +564,12 @@ components:
       required:
         - song
         - userName
-        - isPlayed
       properties:
         song:
           $ref: '#/components/schemas/Song'
         userName:
           description: The user who put the song in the queue.
           type: string
-        isPlayed:
-          description: Whether this entry has already been played.
-          type: boolean
     RegisterCredentials:
       type: object
       required:
