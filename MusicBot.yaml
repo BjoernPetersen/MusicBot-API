@@ -557,12 +557,12 @@ components:
       type: object
       required:
         - name
-        - guestPass
+        - userId
       properties:
         name:
           description: The user name.
           type: string
-        guestPass:
+        userId:
           description: Some unique identifier for the user. Typically a UUID or Android device ID.
           type: string
           format: password
