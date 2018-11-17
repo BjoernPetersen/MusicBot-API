@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-    - image: openjdk:8-jre-slim
+    - image: openjdk:8-jre
     working_directory: ~/app
     steps:
     - checkout
