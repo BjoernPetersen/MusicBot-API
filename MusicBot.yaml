@@ -471,7 +471,7 @@ components:
       properties:
         id:
           type: string
-          example: playmusic
+          example: com.github.bjoernpetersen.spotify.SpotifyProvider
         name:
           type: string
           example: Google Play Music
