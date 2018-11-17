@@ -2,13 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-    - image: openjdk:8-jre
+    - image: openjdk:8-jre-slim
     working_directory: ~/app
     steps:
     - checkout
     - deploy:
         command: |
-          wget http://central.maven.org/maven2/org/openapitools/openapi-generator-cli/3.3.0/openapi-generator-cli-3.3.0.jar -O openapi-generator-cli.jar
+          wget http://central.maven.org/maven2/org/openapitools/openapi-generator-cli/3.3.3/openapi-generator-cli-3.3.3.jar -O openapi-generator-cli.jar
           java -jar openapi-generator-cli.jar generate -i MusicBot.yaml -o docs -g html
         name: Build docs
     - store_artifacts:
