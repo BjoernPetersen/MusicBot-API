@@ -12,7 +12,7 @@ The latest documentation, automatically generated from the specification, can be
 ## Auth
 This is a tricky subject for the MusicBot, because the API is only available in the
 local network, which makes full HTTPS impossible. Another consideration is that
-client users should not have to worry too much about the authentication process.
+client end users should not have to worry too much about the authentication process.
 
 For most users, a `Guest` account ([see below](#users)) is sufficent, which does not
 require them to enter a password, but only to choose a name.
