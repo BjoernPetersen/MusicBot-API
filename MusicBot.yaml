@@ -36,7 +36,6 @@ paths:
             application/json:
               schema:
                 type: string
-                format: password
         409:
           description: Username already in use.
           content:
@@ -66,7 +65,6 @@ paths:
             application/json:
               schema:
                 type: string
-                format: password
         400:
           description: Invalid new password.
           content:
@@ -565,7 +563,6 @@ components:
         userId:
           description: Some unique identifier for the user. Typically a UUID or Android device ID.
           type: string
-          format: password
     PasswordChange:
       type: object
       required:
@@ -574,7 +571,6 @@ components:
         newPassword:
           description: The new password.
           type: string
-          format: password
     AuthExpectation:
       type: object
       required:
