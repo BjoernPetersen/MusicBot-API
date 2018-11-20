@@ -134,10 +134,9 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     put:
       operationId: setPlayerState
-      summary: Pauses the player.
+      summary: Changes the player state.
       description: >
-        Pauses the current playback. If the current player state is not PLAY,
-        does nothing.
+        Changes the current player state, i.e. pauses, resumes or skips the current song.
       requestBody:
         required: true
         description: The desired player state change.
