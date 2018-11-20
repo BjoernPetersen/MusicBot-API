@@ -33,13 +33,13 @@ paths:
         201:
           description: An authorization token.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
         409:
           description: Username already in use.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
     put:
@@ -67,7 +67,7 @@ paths:
         400:
           description: Invalid new password.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
         401:
@@ -100,10 +100,9 @@ paths:
         200:
           description: An authorization token.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
-                format: password
         401:
           $ref: '#/components/responses/Unauthenticated'
         403:
@@ -111,7 +110,7 @@ paths:
         404:
           description: Unknown user.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
   /player:
@@ -323,7 +322,7 @@ paths:
         404:
           description: Invalid provider ID.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
                 example: Invalid provider
@@ -410,7 +409,7 @@ paths:
         404:
           description: Suggester not found.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
                 example: 'Suggester not found: Napster'
@@ -447,7 +446,7 @@ paths:
         404:
           description: Song or Provider not found.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
 components:
