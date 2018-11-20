@@ -49,7 +49,6 @@ paths:
         Sets a new password for the caller.
         If the user was a guest account, this makes him a full user.
       security:
-        - Basic: []
         - Token: []
       requestBody:
         required: true
