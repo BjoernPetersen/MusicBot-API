@@ -462,7 +462,7 @@ components:
           example: com.github.bjoernpetersen.spotify.SpotifyProvider
         name:
           type: string
-          example: Google Play Music
+          example: Spotify
     Song:
       type: object
       required:
