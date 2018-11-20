@@ -424,13 +424,6 @@ paths:
           schema:
            type: string
           required: true
-        - name: Authorization
-          in: header
-          description: An authorization token with 'dislike' permission.
-          schema:
-            type: string
-            format: password
-          required: true
         - name: songId
           in: query
           description: The ID of the song to remove.
