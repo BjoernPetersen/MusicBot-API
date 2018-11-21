@@ -598,14 +598,14 @@ components:
     ParameterIsMissing:
       description: A parameter is missing.
       content:
-        application/json:
+        text/plain:
           schema:
             type: string
             example: 'Missing parameter: <PARAMETER_NAME>'
     SongNotFound:
       description: The song could not be found.
       content:
-        application/json:
+        text/plain:
           schema:
             type: string
             example: 'Song not found.'
