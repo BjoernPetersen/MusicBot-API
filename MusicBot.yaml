@@ -11,6 +11,22 @@ security:
   - Token: []
 paths:
   /user:
+    get:
+      operationId: getMe
+      summary: Retrieves information about the calling user
+      description: >
+        Checks if the user's token is valid, decodes it, and returns the information stored inside.
+        This is a relatively cheap operation and may be used for reasonably frequent token validity checks.
+        This may also be used to decode the token payload, especially by clients that can't easily do so themselves.
+      responses:
+        200:
+          description: Information about the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        401:
+          $ref: '#/components/responses/Unauthenticated'
     post:
       operationId: registerUser
       summary: Registers a new user.
@@ -539,6 +555,24 @@ components:
         userName:
           description: The user who put the song in the queue.
           type: string
+    UserInfo:
+      type: object
+      required:
+        - name
+        - userId
+        - permissions
+      properties:
+        name:
+          description: The user name.
+          type: string
+        userId:
+          description: Some unique identifier for the user. Typically a UUID or Android device ID.
+          type: string
+        permissions:
+          description: A list of permission identifiers for this user.
+          type: array
+          items:
+            type: string
     RegisterCredentials:
       type: object
       required:
