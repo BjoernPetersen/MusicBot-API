@@ -579,7 +579,9 @@ components:
           description: The user name.
           type: string
         userId:
-          description: Some unique identifier for the user. Typically a UUID or Android device ID.
+          description: >
+            Some unique identifier for the user. Typically a UUID or Android device ID.
+            Note that uniqueness isn't enforced, as the ID is basically used in lieu of a password for guest users.
           type: string
     PasswordChange:
       type: object
