@@ -30,7 +30,7 @@ Client implementations should not ask the user for a password, unless:
 Most endpoints require a bearer token for authentication/authorization.
 Issued tokens are JWT tokens with a JSON payload.
 
-The payload is a JSON object with at least a `permissions` array:
+The payload has a at least a `permissions` array claim containing the permissions of the user.
 
 ```json
 {
