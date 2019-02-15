@@ -1,4 +1,4 @@
-# MusicBot-API ![GitHub (pre-)release](https://img.shields.io/github/release/BjoernPetersen/MusicBot-API/all.svg)
+# MusicBot-API ![](https://img.shields.io/github/release-pre/bjoernpetersen/musicbot-api.svg?style=flat)
 
 The OpenAPI specification for the [MusicBot](https://github.com/BjoernPetersen/MusicBot).
 
