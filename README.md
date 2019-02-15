@@ -50,7 +50,7 @@ There are two types of users: `Guest` users and `Full` users.
 - can have additional permissions
 
 When registering a new user, first a `Guest` user is created.
-That user can then be converted to a `Full` user by setting a password ([see OpenAPI docs under `changePassword`](#documentation)).
+That user can then be converted to a `Full` user by setting a password ([see OpenAPI docs under `changePassword`](#musicbot-api-)).
 
 ### Log in
 
