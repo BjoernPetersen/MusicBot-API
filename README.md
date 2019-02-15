@@ -1,16 +1,8 @@
-# JMusicBot-API ![GitHub (pre-)release](https://img.shields.io/github/release/BjoernPetersen/JMusicBot-API/all.svg)
+# MusicBot-API ![GitHub (pre-)release](https://img.shields.io/github/release/BjoernPetersen/MusicBot-API/all.svg)
 
-The OpenAPI specification for the [JMusicBot](https://github.com/BjoernPetersen/JMusicBot).
+The OpenAPI specification for the [MusicBot](https://github.com/BjoernPetersen/MusicBot).
 
-**Note: This documentation applies to version 0.10.0, which has not been released yet.**
-
-## Android client library
-
-TODO
-
-# Documentation
-
-The latest documentation, automatically generated from the specification, can be found here: [documentation](https://felixgail.github.io/CircleCIArtifactProvider/index.html?vcs-type=github&user=BjoernPetersen&project=JMusicBot-API&build=latest&branch=master&filter=successful&path=docs/index.html&token=46dc7aefa69e32721cbdf9ec6e74645f52055c13).
+The latest documentation, automatically generated from the specification, can be found here: [documentation](https://felixgail.github.io/CircleCIArtifactProvider/index.html?vcs-type=github&user=BjoernPetersen&project=MusicBot-API&build=latest&branch=master&filter=successful&path=docs/index.html&token=46dc7aefa69e32721cbdf9ec6e74645f52055c13).
 
 ## Auth
 
