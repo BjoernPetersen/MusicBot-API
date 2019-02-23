@@ -23,6 +23,7 @@ Most endpoints require a bearer token for authentication/authorization.
 Issued tokens are JWT tokens with a JSON payload.
 
 The payload has a at least a `permissions` array claim containing the permissions of the user.
+The possible permissions are defined in the `MusicBot` library: [Permission.kt](https://github.com/BjoernPetersen/MusicBot/blob/develop/src/main/kotlin/net/bjoernpetersen/musicbot/api/auth/Permission.kt).
 
 ```json
 {
