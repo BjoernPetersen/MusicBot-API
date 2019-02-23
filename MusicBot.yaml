@@ -499,6 +499,43 @@ paths:
             text/plain:
               schema:
                 type: string
+
+  /volume:
+    get:
+      operationId: getVolume
+      summary: Gets the current volume.
+      description: >
+        Gets the current volume. If the bot doesn't have the means to access/control the volume, the response will
+        indicate that, but still have the same format.
+      responses:
+        200:
+          description: The current volume.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+    put:
+      operationId: setVolume
+      summary: Sets the current volume.
+      parameters:
+        - name: value
+          in: query
+          required: true
+          description: The new volume between 0 and 100.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+      responses:
+        200:
+          description: >
+            The new volume information. Note that this might not reflect the requested value if volume control is
+            unsupported by the bot.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+
 components:
   schemas:
     VersionInfo:
@@ -685,6 +722,23 @@ components:
           type: array
           items:
             type: string
+    Volume:
+      type: object
+      description: >
+        Information about the bot volume.
+      required:
+        - volume
+        - isSupported
+      properties:
+        volume:
+          description: The volume between 0 and 100.
+          type: integer
+          minimum: 0
+          maximum: 100
+        isSupported:
+          description: Whether volume control is actually supported by the bot.
+          type: boolean
+
   securitySchemes:
     Token:
       type: http
