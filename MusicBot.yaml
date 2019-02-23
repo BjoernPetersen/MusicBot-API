@@ -10,6 +10,18 @@ info:
 security:
   - Token: []
 paths:
+  /version:
+    get:
+      operationId: getVersion
+      summary: Retrieves version information about the bot.
+      security: []
+      responses:
+        200:
+          description: Information about the bot instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionInfo'
   /user:
     get:
       operationId: getMe
@@ -465,6 +477,39 @@ paths:
                 type: string
 components:
   schemas:
+    VersionInfo:
+      description: Describes the bot version.
+      type: object
+      required:
+        - apiVersion
+        - implementation
+      properties:
+        apiVersion:
+          example: 1.0.0
+          description: The API version.
+          type: string
+        implementation:
+          $ref: "#/components/schemas/ImplementationInfo"
+    ImplementationInfo:
+      description: Information about the implementation serving the API.
+      type: object
+      required:
+        - name
+        - version
+      properties:
+        name:
+          description: The name of the server implementation.
+          example: DeskBot
+          type: string
+        version:
+          description: The version of the implementation.
+          example: 1.0.0
+          type: string
+        projectInfo:
+          description: URL to the project website.
+          example: https://github.com/BjoernPetersen/MusicBot-desktop
+          type: string
+
     NamedPlugin:
       type: object
       required:
