@@ -271,22 +271,32 @@ paths:
   /player/queue/order:
     put:
       operationId: moveEntry
-      summary: Moves a song entry to another index in the queue.
+      summary: Moves a entry in the queue.
+      description: >
+        Moves a song, which is already in the queue, to another position in the queue.
+        If the song is not in the queue, the queue is not changed.
       parameters:
         - name: index
           in: query
-          description: The index to move to.
+          description: >
+            The index to move to.
+            If the index is greater than the size of the queue, the entry will be moved to the end of the queue.
           schema:
             type: integer
             minimum: 0
           required: true
-      requestBody:
-        description: The song entry to move.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/QueueEntry'
+        - name: songId
+          in: query
+          description: The ID of the moved song.
+          schema:
+            type: string
+          required: true
+        - name: providerId
+          in: query
+          description: The provider ID of the moved song.
+          schema:
+            type: string
+          required: true
       responses:
         200:
           $ref: '#/components/responses/Queue'
