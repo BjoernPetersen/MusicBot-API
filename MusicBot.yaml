@@ -106,7 +106,6 @@ paths:
       description: Deletes the user associated with the Authorization token.
       security:
         - Basic: []
-        - Token: []
       responses:
         204:
           description: Successfully deleted.
