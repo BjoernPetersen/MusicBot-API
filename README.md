@@ -36,6 +36,8 @@ The possible permissions are defined in the `MusicBot` library: [Permission.kt](
 
 ### Users
 
+Users are generally identified by their name (case-insensitive).
+
 There are two types of users: `Guest` users and `Full` users.
 
 `Guest` users:
