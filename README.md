@@ -2,7 +2,7 @@
 
 The OpenAPI specification for the [MusicBot](https://github.com/BjoernPetersen/MusicBot).
 
-The latest documentation, automatically generated from the specification, can be found here: [documentation](https://felixgail.github.io/CircleCIArtifactProvider/index.html?vcs-type=github&user=BjoernPetersen&project=MusicBot-API&build=latest&branch=master&filter=successful&path=docs/index.html&token=46dc7aefa69e32721cbdf9ec6e74645f52055c13).
+The latest documentation, automatically generated from the [specification](MusicBot.yaml), can be found here: [documentation](https://felixgail.github.io/CircleCIArtifactProvider/index.html?vcs-type=github&user=BjoernPetersen&project=MusicBot-API&build=latest&branch=master&filter=successful&path=docs/index.html&token=46dc7aefa69e32721cbdf9ec6e74645f52055c13).
 
 ## Auth
 
