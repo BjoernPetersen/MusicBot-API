@@ -628,6 +628,15 @@ components:
             - ERROR
         songEntry:
           $ref: '#/components/schemas/SongEntry'
+        progress:
+          description: >
+            Progress of the current song in seconds.
+            If no song is playing, this will be 0.
+            If the current song has a duration, this value will never be greater than that. It will
+            instead remain at the maximum value (the song's duration) until the song has actually
+            ended.
+          type: integer
+          minimum: 0
     PlayerStateChange:
       type: object
       required:
