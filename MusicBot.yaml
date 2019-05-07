@@ -471,7 +471,7 @@ paths:
           in: path
           description: the ID of the suggester.
           schema:
-           type: string
+            type: string
           required: true
         - name: songId
           in: query
