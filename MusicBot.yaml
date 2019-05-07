@@ -22,6 +22,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionInfo'
+  /exit:
+    post:
+      operationId: exit
+      summary: Exit the bot process.
+      description: >
+        Gracefully shuts down the bot.
+        Requires "exit" permission.
+      responses:
+        204:
+          description: The shutdown has been scheduled and will be performed soon.
   /user:
     get:
       operationId: getMe
