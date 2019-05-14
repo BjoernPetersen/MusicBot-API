@@ -32,6 +32,44 @@ paths:
       responses:
         204:
           description: The shutdown has been scheduled and will be performed soon.
+  /key:
+    get:
+      operationId: getServerKey
+      summary: Retrieves the public key
+      description: >
+        Retrieves the public key for the bot instance.
+        Headers and payloads are expected to be encrypted with this key.
+      security: []
+      responses:
+        200:
+          description: Base64 encoded public key of the bot
+          content:
+            text/plain:
+              schema:
+                type: string
+    put:
+      operationId: registerClientKey
+      summary: Registers a new public key
+      description: >
+        Registers a public key for a client, which will
+        be used by the bot instance to encrypt communication to the client.
+      security: []
+      requestBody:
+        required: true
+        description: The clients public key.
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        200:
+          description: key successfully registered.
+        400:
+          description: Invalid key.
+          content:
+            text/plain:
+              schema:
+                type: string
   /user:
     get:
       operationId: getMe
