@@ -3,7 +3,7 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.13.0
+  version: 0.14.0
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
