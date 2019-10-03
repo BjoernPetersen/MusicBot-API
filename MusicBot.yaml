@@ -32,7 +32,7 @@ paths:
       responses:
         204:
           description: The shutdown has been scheduled and will be performed soon.
-  /key:
+  /icbint:
     get:
       operationId: getKey
       summary: Returns the bots public key
@@ -46,8 +46,6 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: 'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxG8qGb7QUXmJBoeDQ8Pw2AjEKoDswFnT+agYIoCuBi7ZvN8jImi+nzdzkgZB8Rsy38Q/BwdMquBTrXinXUxQApXoFGxlfcgC5q1gygK/+DroyH9Sw6oG+uEfTVSMm+3Dq4mX7CEm2igvEz5YlFTJvzSrDWhbuBxrgexqilYwjlf27CBDZj5Gu807JcDtrWA+jBRH+jEB15WI74riDksASxIXR4GCLfKWUBOllz+Ob5K73MkC78vXvV1m5ZvjVGTeKgnqKXRmNxVsTV3+f9cLPipWULxKv3GbbWsUopybxEM5lu2uGoH/pExn1dWLXXJop8NrEWFJ0ncvnzZXt0tGXOJESkTKKeWXrJgMenSrxszHlhBjAmm3fXcd1N5WlM67q5Jr5hDJMirYd4YCehtDsqrg+y3F+flFSvd1Qh2wQb857QNfUOeGQms9blagf2G6oD6otg/ks7EkAnxfMOQtaEj/QkZ8eNuKbQU0RB/Fjut2J3KONR6UWVLur4v4EQ+lBWTuEyEZjWuk517BZ25fMyj1O9IprsFM1Jx22XAus14ed7avsAv77mkG5AKqQtvte4ZpxW4gxEnl5DYjacZ96wqD0MVrscGINdj0H8Xh7KTMcv1yP+JCvytj1hGvl5xf7BxmTYlnmok4ipr3NPkNrDA6UKuUImdhE3R8bgcpes0CAwEAAQ=='
-
   /user:
     get:
       operationId: getMe
