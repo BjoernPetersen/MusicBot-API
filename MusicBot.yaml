@@ -126,7 +126,7 @@ paths:
   /token:
     get:
       operationId: loginUser
-      summary: Retrieves a token for a user
+      summary: Retrieves a token and a refresh token for the user
       security:
         - Basic: []
       description: >
@@ -135,9 +135,9 @@ paths:
         200:
           description: An authorization token.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/Tokens'
         401:
           $ref: '#/components/responses/Unauthenticated'
         403:
@@ -148,6 +148,21 @@ paths:
             text/plain:
               schema:
                 type: string
+    post:
+      operationId: refreshToken
+      summary: Uses a priorly issued refreshToken to create a new pair of tokens
+      description: >
+        Accepts a refresh token instead of the normal token to generate a new
+        pair of tokens
+      responses:
+        200:
+          description: An authorization token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tokens'
+        401:
+          $ref: '#/components/responses/Unauthenticated'
   /player:
     get:
       operationId: getPlayerState
@@ -777,6 +792,20 @@ components:
         isSupported:
           description: Whether volume control is actually supported by the bot.
           type: boolean
+    Tokens:
+      type: object
+      description: >
+        A Token and a refresh token.
+      required:
+        - token
+        - refreshToken
+      properties:
+        token:
+          description: A short-lived jwt token issued by the server.
+          type: string
+        refreshToken:
+          description: A long-livived jwt token to refresh the token.
+          type: string
 
   securitySchemes:
     Token:
