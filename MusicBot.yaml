@@ -148,7 +148,8 @@ paths:
             text/plain:
               schema:
                 type: string
-    post:
+  /refresh:
+    get:
       operationId: refreshToken
       summary: Uses a priorly issued refreshToken to create a new pair of tokens
       description: >
