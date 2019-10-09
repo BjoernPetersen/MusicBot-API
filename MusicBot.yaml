@@ -132,6 +132,13 @@ paths:
         - RefreshToken: []
       description: >
         Retrieves an Authorization token for a user.
+      parameters:
+        - name: includeRefresh
+          in: query
+          schema:
+            type: boolean
+          description: Enforce inclusion of a new refresh-token.
+          required: false
       responses:
         200:
           description: An authorization token.
@@ -149,6 +156,19 @@ paths:
             text/plain:
               schema:
                 type: string
+    delete:
+      operationId: invalidateToken
+      summary: Invalidate all refresh-tokens for the current user.
+      description: >
+        Invalidates all refresh-tokens for the current user.
+        Access-tokens will still be valid until expiration.
+      responses:
+        200:
+          description: successfully invalidated.
+        401:
+          $ref: '#/components/responses/Unauthenticated'
+        403:
+          $ref: '#/components/responses/Unauthorized'
   /player:
     get:
       operationId: getPlayerState
@@ -781,10 +801,9 @@ components:
     Tokens:
       type: object
       description: >
-        A Token and a refresh token.
+        A Token and optionally a refresh token.
       required:
         - accessToken
-        - refreshToken
       properties:
         accessToken:
           description: A short-lived jwt token issued by the server.
