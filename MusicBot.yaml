@@ -790,7 +790,7 @@ components:
           description: A short-lived jwt token issued by the server.
           type: string
         refreshToken:
-          description: A long-livived jwt token to refresh the token.
+          description: A long-lived jwt token to refresh the access token.
           type: string
 
   securitySchemes:
