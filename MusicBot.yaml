@@ -129,6 +129,7 @@ paths:
       summary: Retrieves a token and a refresh token for the user
       security:
         - Basic: []
+        - RefreshToken: []
       description: >
         Retrieves an Authorization token for a user.
       responses:
@@ -148,22 +149,6 @@ paths:
             text/plain:
               schema:
                 type: string
-  /refresh:
-    get:
-      operationId: refreshToken
-      summary: Uses a priorly issued refreshToken to create a new pair of tokens
-      description: >
-        Accepts a refresh token instead of the normal token to generate a new
-        pair of tokens
-      responses:
-        200:
-          description: An authorization token.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Tokens'
-        401:
-          $ref: '#/components/responses/Unauthenticated'
   /player:
     get:
       operationId: getPlayerState
@@ -813,6 +798,11 @@ components:
       type: http
       scheme: bearer
       description: An API key issued by server.
+      bearerFormat: jwt
+    RefreshToken:
+      type: http
+      scheme: bearer
+      description: A jwt refresh-token issued by the server.
       bearerFormat: jwt
     Basic:
       type: http
