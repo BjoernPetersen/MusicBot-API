@@ -2,7 +2,7 @@
 
 The OpenAPI specification for the [MusicBot](https://github.com/BjoernPetersen/MusicBot).
 
-The latest documentation, automatically generated from the [specification](MusicBot.yaml), can be found here: [documentation](api.docs.kiu.party).
+The latest documentation, automatically generated from the [specification](MusicBot.yaml), can be found here: [documentation](https://api.docs.kiu.party).
 
 ## Auth
 
