@@ -3,10 +3,10 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.13.0
+  version: 0.14.0
   license:
     name: MIT
-    url: 'https://opensource.org/licenses/MIT'
+    url: "https://opensource.org/licenses/MIT"
 security:
   - Token: []
 paths:
@@ -21,7 +21,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VersionInfo'
+                $ref: "#/components/schemas/VersionInfo"
   /exit:
     post:
       operationId: exit
@@ -46,9 +46,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserInfo'
+                $ref: "#/components/schemas/UserInfo"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
     post:
       operationId: registerUser
       summary: Registers a new user.
@@ -64,20 +64,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterCredentials'
+              $ref: "#/components/schemas/RegisterCredentials"
       responses:
         201:
-          description: An authorization token.
+          description: An access token and a refresh token.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: "#/components/schemas/Tokens"
+        403:
+          description: The server does not allow registrations right now.
         409:
           description: Username already in use.
-          content:
-            text/plain:
-              schema:
-                type: string
     put:
       operationId: changePassword
       summary: Sets a new password.
@@ -92,7 +90,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PasswordChange'
+              $ref: "#/components/schemas/PasswordChange"
       responses:
         200:
           description: A new Authorization token.
@@ -102,14 +100,10 @@ paths:
                 type: string
         400:
           description: Invalid new password.
-          content:
-            text/plain:
-              schema:
-                type: string
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
     delete:
       operationId: deleteUser
       summary: Deletes a user
@@ -120,34 +114,52 @@ paths:
         204:
           description: Successfully deleted.
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
   /token:
     get:
       operationId: loginUser
-      summary: Retrieves a token for a user
+      summary: Retrieves a token and optionally a refresh token for the user.
       security:
         - Basic: []
+        - RefreshToken: []
       description: >
-        Retrieves an Authorization token for a user.
+        Retrieves an access token for a user. The response may also also include a refresh token,
+        if Basic authentication or a soon-to-expire refresh token was used in the request.
+      parameters:
+        - name: includeRefresh
+          in: query
+          schema:
+            type: boolean
+          description: Enforce inclusion of a new refresh token.
+          required: false
       responses:
         200:
-          description: An authorization token.
+          description: An access token and optionally a refresh token.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: "#/components/schemas/Tokens"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
           description: Unknown user.
-          content:
-            text/plain:
-              schema:
-                type: string
+    delete:
+      operationId: invalidateToken
+      summary: Invalidate all refresh tokens for the current user.
+      description: >
+        Invalidates all refresh tokens for the current user.
+        Access tokens will still be valid until expiration.
+      responses:
+        200:
+          description: Successfully invalidated.
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
   /player:
     get:
       operationId: getPlayerState
@@ -161,11 +173,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerState'
+                $ref: "#/components/schemas/PlayerState"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
     put:
       operationId: setPlayerState
       summary: Changes the player state.
@@ -178,18 +190,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlayerStateChange'
+              $ref: "#/components/schemas/PlayerStateChange"
       responses:
         200:
           description: The new PlayerState.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlayerState'
+                $ref: "#/components/schemas/PlayerState"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
   /player/queue/history:
     get:
       operationId: getRecentQueue
@@ -202,22 +214,22 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SongEntry'
+                  $ref: "#/components/schemas/SongEntry"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
   /player/queue:
     get:
       operationId: getQueue
       summary: Returns the current player queue.
       responses:
         200:
-          $ref: '#/components/responses/Queue'
+          $ref: "#/components/responses/Queue"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
     put:
       operationId: enqueue
       summary: Adds a Song to the queue
@@ -240,15 +252,15 @@ paths:
             type: string
       responses:
         200:
-          $ref: '#/components/responses/Queue'
+          $ref: "#/components/responses/Queue"
         400:
-          $ref: '#/components/responses/ParameterIsMissing'
+          $ref: "#/components/responses/ParameterIsMissing"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
-          $ref: '#/components/responses/SongNotFound'
+          $ref: "#/components/responses/SongNotFound"
     delete:
       operationId: dequeue
       summary: Removes a Song from the queue.
@@ -271,15 +283,15 @@ paths:
           required: true
       responses:
         200:
-          $ref: '#/components/responses/Queue'
+          $ref: "#/components/responses/Queue"
         400:
-          $ref: '#/components/responses/ParameterIsMissing'
+          $ref: "#/components/responses/ParameterIsMissing"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
-          $ref: '#/components/responses/SongNotFound'
+          $ref: "#/components/responses/SongNotFound"
   /player/queue/order:
     put:
       operationId: moveEntry
@@ -312,13 +324,13 @@ paths:
           required: true
       responses:
         200:
-          $ref: '#/components/responses/Queue'
+          $ref: "#/components/responses/Queue"
         400:
-          $ref: '#/components/responses/ParameterIsMissing'
+          $ref: "#/components/responses/ParameterIsMissing"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
   /provider:
     get:
       operationId: getProviders
@@ -331,12 +343,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/NamedPlugin'
+                  $ref: "#/components/schemas/NamedPlugin"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
-  '/provider/{providerId}':
+          $ref: "#/components/responses/Unauthorized"
+  "/provider/{providerId}":
     get:
       operationId: searchSong
       summary: Searches for songs
@@ -376,21 +388,16 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Song'
+                  $ref: "#/components/schemas/Song"
         400:
-          $ref: '#/components/responses/ParameterIsMissing'
+          $ref: "#/components/responses/ParameterIsMissing"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
           description: Invalid provider ID.
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: Invalid provider
-  '/provider/{providerId}/{songId}':
+  "/provider/{providerId}/{songId}":
     get:
       operationId: lookupSong
       summary: Looks up a song
@@ -414,15 +421,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Song'
+                $ref: "#/components/schemas/Song"
         400:
-          $ref: '#/components/responses/ParameterIsMissing'
+          $ref: "#/components/responses/ParameterIsMissing"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
-          $ref: '#/components/responses/SongNotFound'
+          $ref: "#/components/responses/SongNotFound"
   /suggester:
     get:
       operationId: getSuggesters
@@ -435,8 +442,8 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/NamedPlugin'
-  '/suggester/{suggesterId}':
+                  $ref: "#/components/schemas/NamedPlugin"
+  "/suggester/{suggesterId}":
     get:
       operationId: suggestSong
       summary: Returns a list of suggestions.
@@ -465,18 +472,13 @@ paths:
                 type: array
                 maxItems: 64
                 items:
-                  $ref: '#/components/schemas/Song'
+                  $ref: "#/components/schemas/Song"
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
           description: Suggester not found.
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: 'Suggester not found: Napster'
     delete:
       operationId: removeSuggestion
       summary: Removes a song from the suggestions.
@@ -508,15 +510,11 @@ paths:
           description: >
             Success. Will also be the case if the song was not in the current suggestions.
         401:
-          $ref: '#/components/responses/Unauthenticated'
+          $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         404:
           description: Song or Provider not found.
-          content:
-            text/plain:
-              schema:
-                type: string
 
   /volume:
     get:
@@ -531,7 +529,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Volume'
+                $ref: "#/components/schemas/Volume"
     put:
       operationId: setVolume
       summary: Sets the current volume.
@@ -556,7 +554,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Volume'
+                $ref: "#/components/schemas/Volume"
 
 components:
   schemas:
@@ -616,7 +614,7 @@ components:
         id:
           type: string
         provider:
-          $ref: '#/components/schemas/NamedPlugin'
+          $ref: "#/components/schemas/NamedPlugin"
         title:
           type: string
           description: The title of a song. Most important identifier for human readers.
@@ -643,7 +641,7 @@ components:
           description: >
             The URL pointing to an album art for this song.
             This property is deprecated and should be ignored if albumArtPath is present.
-          example: 'http://example.com/image.png'
+          example: "http://example.com/image.png"
     PlayerState:
       type: object
       required:
@@ -657,7 +655,7 @@ components:
             - STOP
             - ERROR
         songEntry:
-          $ref: '#/components/schemas/SongEntry'
+          $ref: "#/components/schemas/SongEntry"
         progress:
           description: >
             Progress of the current song in seconds.
@@ -684,7 +682,7 @@ components:
         - song
       properties:
         song:
-          $ref: '#/components/schemas/Song'
+          $ref: "#/components/schemas/Song"
         userName:
           description: >
             The user who put the song in the queue. May be missing if it was auto suggested.
@@ -696,7 +694,7 @@ components:
         - userName
       properties:
         song:
-          $ref: '#/components/schemas/Song'
+          $ref: "#/components/schemas/Song"
         userName:
           description: The user who put the song in the queue.
           type: string
@@ -777,6 +775,21 @@ components:
         isSupported:
           description: Whether volume control is actually supported by the bot.
           type: boolean
+    Tokens:
+      type: object
+      description: >
+        An access token and optionally a refresh token.
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          description: >
+            A short-lived JWT token issued by the server.
+            This token is used to authenticate all further API requests, except token refreshes.
+          type: string
+        refreshToken:
+          description: A long-lived opaque token to refresh the access token.
+          type: string
 
   securitySchemes:
     Token:
@@ -784,6 +797,11 @@ components:
       scheme: bearer
       description: An API key issued by server.
       bearerFormat: jwt
+    RefreshToken:
+      type: http
+      scheme: bearer
+      description: A refresh token issued by the server.
+      bearerFormat: opaque
     Basic:
       type: http
       scheme: basic
@@ -791,18 +809,8 @@ components:
   responses:
     ParameterIsMissing:
       description: A parameter is missing.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'Missing parameter: <PARAMETER_NAME>'
     SongNotFound:
       description: The song could not be found.
-      content:
-        text/plain:
-          schema:
-            type: string
-            example: 'Song not found.'
     Queue:
       description: The current player queue.
       content:
@@ -810,18 +818,18 @@ components:
           schema:
             type: array
             items:
-              $ref: '#/components/schemas/QueueEntry'
+              $ref: "#/components/schemas/QueueEntry"
     Unauthenticated:
       description: >
         The called endpoint requires authentication, which was not provided.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthExpectation'
+            $ref: "#/components/schemas/AuthExpectation"
     Unauthorized:
       description: >
         The called endpoint has specific permission requirements, which were not met.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthExpectation'
+            $ref: "#/components/schemas/AuthExpectation"
