@@ -161,7 +161,7 @@ paths:
       operationId: invalidateToken
       summary: Invalidate all refresh tokens for the current user.
       description: >
-        Invalidates all refresh-tokens for the current user.
+        Invalidates all refresh tokens for the current user.
         Access tokens will still be valid until expiration.
       responses:
         200:
