@@ -3,7 +3,7 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.13.0
+  version: 0.14.0
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
@@ -126,18 +126,27 @@ paths:
   /token:
     get:
       operationId: loginUser
-      summary: Retrieves a token for a user
+      summary: Retrieves a token and optionally a refresh token for the user.
       security:
         - Basic: []
+        - RefreshToken: []
       description: >
-        Retrieves an Authorization token for a user.
+        Retrieves an access token for a user. The response may also also include a refresh token, 
+        if Basic authentication or a soon-to-expire refresh token was used in the request.
+      parameters:
+        - name: includeRefresh
+          in: query
+          schema:
+            type: boolean
+          description: Enforce inclusion of a new refresh token.
+          required: false
       responses:
         200:
           description: An authorization token.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/Tokens'
         401:
           $ref: '#/components/responses/Unauthenticated'
         403:
@@ -148,6 +157,19 @@ paths:
             text/plain:
               schema:
                 type: string
+    delete:
+      operationId: invalidateToken
+      summary: Invalidate all refresh tokens for the current user.
+      description: >
+        Invalidates all refresh tokens for the current user.
+        Access tokens will still be valid until expiration.
+      responses:
+        200:
+          description: Successfully invalidated.
+        401:
+          $ref: '#/components/responses/Unauthenticated'
+        403:
+          $ref: '#/components/responses/Unauthorized'
   /player:
     get:
       operationId: getPlayerState
@@ -777,6 +799,21 @@ components:
         isSupported:
           description: Whether volume control is actually supported by the bot.
           type: boolean
+    Tokens:
+      type: object
+      description: >
+        An access token and optionally a refresh token.
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          description: >
+            A short-lived JWT token issued by the server.
+            This token is used to authenticate all further API requests, except token refreshes.
+          type: string
+        refreshToken:
+          description: A long-lived opaque token to refresh the access token.
+          type: string
 
   securitySchemes:
     Token:
@@ -784,6 +821,11 @@ components:
       scheme: bearer
       description: An API key issued by server.
       bearerFormat: jwt
+    RefreshToken:
+      type: http
+      scheme: bearer
+      description: A refresh token issued by the server.
+      bearerFormat: opaque
     Basic:
       type: http
       scheme: basic
