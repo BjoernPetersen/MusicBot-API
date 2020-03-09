@@ -67,11 +67,11 @@ paths:
               $ref: '#/components/schemas/RegisterCredentials'
       responses:
         201:
-          description: An authorization token.
+          description: An access token and a refresh token.
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/Tokens'
         403:
           description: The server does not allow registrations right now.
         409:
@@ -133,7 +133,7 @@ paths:
         - Basic: []
         - RefreshToken: []
       description: >
-        Retrieves an access token for a user. The response may also also include a refresh token, 
+        Retrieves an access token for a user. The response may also also include a refresh token,
         if Basic authentication or a soon-to-expire refresh token was used in the request.
       parameters:
         - name: includeRefresh
@@ -144,7 +144,7 @@ paths:
           required: false
       responses:
         200:
-          description: An authorization token.
+          description: An access token and optionally a refresh token.
           content:
             application/json:
               schema:
