@@ -72,6 +72,8 @@ paths:
             text/plain:
               schema:
                 type: string
+        403:
+          description: The server does not allow registrations right now.
         409:
           description: Username already in use.
           content:
