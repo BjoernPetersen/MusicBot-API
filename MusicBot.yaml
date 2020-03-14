@@ -3,7 +3,7 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.15.0
+  version: 0.15.1
   license:
     name: MIT
     url: "https://opensource.org/licenses/MIT"
@@ -563,6 +563,7 @@ components:
       type: object
       required:
         - apiVersion
+        - botName
         - implementation
       properties:
         apiVersion:
