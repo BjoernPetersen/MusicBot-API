@@ -3,7 +3,7 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.14.0
+  version: 0.15.0
   license:
     name: MIT
     url: "https://opensource.org/licenses/MIT"
@@ -568,6 +568,10 @@ components:
         apiVersion:
           example: 1.0.0
           description: The API version.
+          type: string
+        botName:
+          example: John's bot
+          description: A user-friendly name for the bot instance. May be customized per instance.
           type: string
         implementation:
           $ref: "#/components/schemas/ImplementationInfo"
