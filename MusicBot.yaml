@@ -3,7 +3,7 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.15.1
+  version: 0.15.2
   license:
     name: MIT
     url: "https://opensource.org/licenses/MIT"
@@ -154,7 +154,7 @@ paths:
         Invalidates all refresh tokens for the current user.
         Access tokens will still be valid until expiration.
       responses:
-        200:
+        204:
           description: Successfully invalidated.
         401:
           $ref: "#/components/responses/Unauthenticated"
