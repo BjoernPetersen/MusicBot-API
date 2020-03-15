@@ -93,11 +93,11 @@ paths:
               $ref: "#/components/schemas/PasswordChange"
       responses:
         200:
-          description: A new Authorization token.
+          description: A new pair of tokens.
           content:
             application/json:
               schema:
-                type: string
+                $ref: "#/components/schemas/Tokens"
         400:
           description: Invalid new password.
         401:
