@@ -117,6 +117,104 @@ paths:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+  "/user/{username}":
+    get:
+      operationId: getUser
+      summary: Retrieves information about a user
+      description: >
+        Returns information about the user specified in the path.
+        Permission information about the user reflects the current state of the bot, permissions saved in still valid JWT tokens may vary.
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to retrieve
+          required: true
+      responses:
+        200:
+          description: Information about the user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+    put:
+      operationId: setUserPermissions
+      summary: Set a users permissions
+      description: >
+        Updates a users permissions.
+        Permissions omitted in the request will be dropped if owned by the user previously.
+        The update will reach the user, when he updates his JWT token.
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to update
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Permission'
+      responses:
+        201:
+          description: The update was successful
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+    delete:
+      operationId: deleteDifferentUser
+      summary: Deletes a selected user
+      description: >
+        Deletes the user defined in path
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to delete
+          required: true
+      responses:
+        201:
+          description: The deletion was successful
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+  /users:
+    get:
+      operationId: getUsers
+      summary: Retrieve all users
+      description: >
+        Retrieves information about all full users.
+        Permission information about users reflects the current state of the bot, permissions saved in still valid jwt tokens may vary.
+      responses:
+        200:
+          description: A list of user information
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/UserInfo'
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
   /token:
     get:
       operationId: loginUser
@@ -806,6 +904,7 @@ components:
         ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
         CHANGE_VOLUME -> Allows to change the playback volume;
         EXIT -> Allows sending a shutdown signal to the bot;
+        USER -> Allows deleting or altering other users and their permissions;
       enum:
         - SKIP
         - DISLIKE
@@ -815,6 +914,7 @@ components:
         - ALTER_SUGGESTIONS
         - CHANGE_VOLUME
         - EXIT
+        - USER
 
   securitySchemes:
     Token:
