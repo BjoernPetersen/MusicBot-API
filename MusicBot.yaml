@@ -716,7 +716,7 @@ components:
           description: A list of permission identifiers for this user.
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Permission'
     RegisterCredentials:
       type: object
       required:
@@ -795,6 +795,26 @@ components:
         refreshToken:
           description: A long-lived opaque token to refresh the access token.
           type: string
+    Permission:
+      type: string
+      description: >
+        SKIP -> Allows skipping songs;
+        DISLIKE -> Allows removing a song suggestion;
+        MOVE -> Users with this permission can alter the queue order;
+        PAUSE -> Allows pausing the playback;
+        ENQUEUE -> Allows enquing songs;
+        ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
+        CHANGE_VOLUME -> Allows to change the playback volume;
+        EXIT -> Allows sending a shutdown signal to the bot;
+      enum:
+        - SKIP
+        - DISLIKE
+        - MOVE
+        - PAUSE
+        - ENQUEUE
+        - ALTER_SUGGESTIONS
+        - CHANGE_VOLUME
+        - EXIT
 
   securitySchemes:
     Token:
