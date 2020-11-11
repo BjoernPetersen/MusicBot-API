@@ -144,14 +144,35 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         404:
           description: The user does not exist
-  "/user/{username}/permission"
+    delete:
+      operationId: deleteDifferentUser
+      summary: Deletes a selected user
+      description: >
+        Deletes the user defined in path
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to delete
+          required: true
+      responses:
+        201:
+          description: The deletion was successful
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+  "/user/{username}/permission":
     put:
       operationId: setUserPermissions
       summary: Set a user's permissions
       description: >
         Updates a user's permissions.
         Permissions omitted in the request will be dropped if owned by the user previously.
-        The update will reach the user, when he updates his JWT token.
+        The update will reach the user when he updates his JWT token.
       parameters:
         - name: username
           in: path
@@ -169,27 +190,6 @@ paths:
       responses:
         201:
           description: The update was successful
-        401:
-          $ref: "#/components/responses/Unauthenticated"
-        403:
-          $ref: "#/components/responses/Unauthorized"
-        404:
-          description: The user does not exist
-    delete:
-      operationId: deleteDifferentUser
-      summary: Deletes a selected user
-      description: >
-        Deletes the user defined in path
-      parameters:
-        - name: username
-          in: path
-          schema:
-            type: string
-          description: The user to delete
-          required: true
-      responses:
-        201:
-          description: The deletion was successful
         401:
           $ref: "#/components/responses/Unauthenticated"
         403:
