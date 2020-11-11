@@ -202,7 +202,7 @@ paths:
       summary: Retrieve all users
       description: >
         Retrieves information about all full users.
-        Permission information about users reflects the current state of the bot, permissions saved in still valid jwt tokens may vary.
+        Permission information about users reflects the current state of the bot, permissions saved in still valid JWT tokens may vary.
       responses:
         200:
           description: A list of user information
