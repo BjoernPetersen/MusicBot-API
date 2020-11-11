@@ -145,7 +145,7 @@ paths:
         404:
           description: The user does not exist
     delete:
-      operationId: deleteDifferentUser
+      operationId: deleteOtherUser
       summary: Deletes a selected user
       description: >
         Deletes the user defined in path
@@ -907,15 +907,15 @@ components:
         EXIT -> Allows sending a shutdown signal to the bot;
         USER -> Allows deleting or altering other users and their permissions;
       enum:
-        - SKIP
-        - DISLIKE
-        - MOVE
-        - PAUSE
-        - ENQUEUE
-        - ALTER_SUGGESTIONS
-        - CHANGE_VOLUME
-        - EXIT
-        - USER
+        - skip
+        - dislike
+        - move
+        - pause
+        - enqueue
+        - alter_suggestions
+        - change_volume
+        - exit
+        - user
 
   securitySchemes:
     Token:
