@@ -129,7 +129,7 @@ paths:
           in: path
           schema:
             type: string
-          description: The user to retrieve
+          description: The user to retrieve. Usernames are case-insensitive
           required: true
       responses:
         200:
@@ -144,6 +144,7 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         404:
           description: The user does not exist
+  "/user/{username}/permission"
     put:
       operationId: setUserPermissions
       summary: Set a user's permissions
@@ -156,7 +157,7 @@ paths:
           in: path
           schema:
             type: string
-          description: The user to update
+          description: The user to update. Usernames are case-insensitive
           required: true
       requestBody:
         content:
@@ -896,11 +897,11 @@ components:
     Permission:
       type: string
       description: >
-        SKIP -> Allows skipping songs;
-        DISLIKE -> Allows removing a song suggestion;
+        SKIP -> The permission to skip the current song or remove songs from the queue. Note that a user is always allowed to remove a song from the queue which he added himself.;
+        DISLIKE -> The permission to remove songs from the upcoming suggestions of a suggester;
         MOVE -> Users with this permission can alter the queue order;
-        PAUSE -> Allows pausing the playback;
-        ENQUEUE -> Allows enquing songs;
+        PAUSE -> Allows pausing/resuming the playback;
+        ENQUEUE -> Allows enqueueing songs;
         ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
         CHANGE_VOLUME -> Allows to change the playback volume;
         EXIT -> Allows sending a shutdown signal to the bot;
