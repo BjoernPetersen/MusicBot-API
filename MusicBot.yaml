@@ -146,9 +146,9 @@ paths:
           description: The user does not exist
     put:
       operationId: setUserPermissions
-      summary: Set a users permissions
+      summary: Set a user's permissions
       description: >
-        Updates a users permissions.
+        Updates a user's permissions.
         Permissions omitted in the request will be dropped if owned by the user previously.
         The update will reach the user, when he updates his JWT token.
       parameters:
