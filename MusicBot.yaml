@@ -905,7 +905,7 @@ components:
         ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
         CHANGE_VOLUME -> Allows to change the playback volume;
         EXIT -> Allows sending a shutdown signal to the bot;
-        USER -> Allows deleting or altering other users and their permissions;
+        MANAGE_USERS -> Allows deleting or altering other users and their permissions;
       enum:
         - skip
         - dislike
@@ -915,7 +915,7 @@ components:
         - alter_suggestions
         - change_volume
         - exit
-        - user
+        - manage_users
 
   securitySchemes:
     Token:
