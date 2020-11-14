@@ -123,7 +123,8 @@ paths:
       summary: Retrieves information about a user
       description: >
         Returns information about the user specified in the path.
-        Permission information about the user reflects the current state of the bot, permissions saved in still valid JWT tokens may vary.
+        Permission information about the user reflects the current state of the bot,
+        permissions saved in still valid JWT tokens may vary.
       parameters:
         - name: username
           in: path
@@ -202,7 +203,8 @@ paths:
       summary: Retrieve all users
       description: >
         Retrieves information about all full users.
-        Permission information about users reflects the current state of the bot, permissions saved in still valid JWT tokens may vary.
+        Permission information about users reflects the current state of the bot,
+        permissions saved in still valid JWT tokens may vary.
       responses:
         200:
           description: A list of user information
@@ -911,7 +913,8 @@ components:
     Permission:
       type: string
       description: >
-        SKIP -> The permission to skip the current song or remove songs from the queue. Note that a user is always allowed to remove a song from the queue which he added himself.;
+        SKIP -> The permission to skip the current song or remove songs from the queue.
+          Note that a user is always allowed to remove a song from the queue which he added himself.;
         DISLIKE -> The permission to remove songs from the upcoming suggestions of a suggester;
         MOVE -> Users with this permission can alter the queue order;
         PAUSE -> Allows pausing/resuming the playback;
@@ -919,7 +922,9 @@ components:
         ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
         CHANGE_VOLUME -> Allows to change the playback volume;
         EXIT -> Allows sending a shutdown signal to the bot;
-        ADMIN -> Allows deleting or altering other users and their permissions. Granting a user the admin permission will automatically grant him all other current permissions. Users holding the admin permission can not alter the permissions of other admins;
+        ADMIN -> Allows deleting or altering other users and their permissions.
+          Granting a user the admin permission will automatically grant him all other current permissions.
+          Users holding the admin permission can not alter the permissions of other admins;
       enum:
         - skip
         - dislike
