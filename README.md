@@ -2,20 +2,43 @@
 
 The OpenAPI specification for the [MusicBot](https://github.com/BjoernPetersen/MusicBot).
 
-The latest documentation, automatically generated from the [specification](MusicBot.yaml), can be found here: [documentation](https://api.docs.kiu.party).
+The latest documentation, automatically generated from the [specification](MusicBot.yaml),
+can be found here: [documentation](https://api.docs.kiu.party).
 
 ## Auth
 
-This is a tricky subject for the MusicBot, because the API is only available in the
-local network, which makes full HTTPS impossible. Another consideration is that
-client end users should not have to worry too much about the authentication process.
+This is a difficult subject as MusicBot instances are deployed in the local network.
+While a solution for automatic HTTPS has been found, end users still have to trust the server owner
+not to misuse their data, including their passwords. Of course official servers salt and hash user
+passwords to increase security, but a server owner may still make modifications to the code and
+gain access to clear-text passwords.
 
-For most users, a `Guest` account ([see below](#users)) is sufficient, which does not
-require them to enter a password, but only to choose a name.
-Client implementations should not ask the user for a password, unless:
+To minimize the trust required from end users to use the MusicBot, users may create a `Guest`
+account, which doesn't require a manually set password, is not persisted, and is limited to the
+default set of permissions. For user convenience and especially for user awareness of the option
+to omit the password, **clients should not ask the user for a password in the login/registration
+process**. A user may only be asked for their password at login if the server responded to the
+`Guest` login attempt with an `AuthExpectation` object requesting a password.
 
-- the user explicitly wishes to set a password
-- a login attempt as a `Guest` has been made and the user already exists as a `Full` user
+If a user wishes to set a password after logging in, for example to receive additional permissions
+or to be able to access the account from multiple devices, he may do so and by that will be upgraded
+to a `Full` user.
+
+Note that clients should combine the login and registration process in order to make onboarding
+as simple as possible. The process should work as follows:
+
+- Ask the user for his name (username).
+- Try to register the user.
+  - If successful -> done
+- Try to log in as a Guest user (see [Users section](#users)).
+  - If successful -> done
+  - Otherwise, if the AuthExpectation indicates a Guest user exists with different credentials,
+    tell the user that their username is already taken. For Full users continue with the next step.
+- Show a password field in addition to the username field and tell the user to enter their password.
+- Try to login in as a Full user.
+  - If successful -> done
+- The user may retry logging in with different passwords or enter a different username.
+  - If the username is changed, hide and clear the password field and return to step 2.
 
 ### Tokens
 
@@ -43,7 +66,7 @@ There are two types of users: `Guest` users and `Full` users.
 `Guest` users:
 
 - are only temporarily stored by the server (in memory)
-- have an automatically generated password, for example an Android device ID
+- have an automatically generated password, for example an Android instance ID
 - only have the default set of permissions
 
 `Full` users:

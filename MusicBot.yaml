@@ -3,7 +3,7 @@ info:
   title: MusicBot
   description: >
     HTTP API for the MusicBot project.
-  version: 0.15.3
+  version: 0.16.0
   license:
     name: MIT
     url: "https://opensource.org/licenses/MIT"
@@ -660,6 +660,7 @@ components:
     VersionInfo:
       description: Describes the bot version.
       type: object
+      additionalProperties: false
       required:
         - apiVersion
         - botName
@@ -678,6 +679,7 @@ components:
     ImplementationInfo:
       description: Information about the implementation serving the API.
       type: object
+      additionalProperties: false
       required:
         - name
         - version
@@ -697,6 +699,7 @@ components:
 
     NamedPlugin:
       type: object
+      additionalProperties: false
       required:
         - id
         - name
@@ -709,6 +712,7 @@ components:
           example: Spotify
     Song:
       type: object
+      additionalProperties: false
       required:
         - id
         - provider
@@ -748,6 +752,7 @@ components:
           example: "http://example.com/image.png"
     PlayerState:
       type: object
+      additionalProperties: false
       required:
         - state
       properties:
@@ -771,6 +776,7 @@ components:
           minimum: 0
     PlayerStateChange:
       type: object
+      additionalProperties: false
       required:
         - action
       properties:
@@ -782,6 +788,7 @@ components:
             - SKIP
     SongEntry:
       type: object
+      additionalProperties: false
       required:
         - song
       properties:
@@ -793,6 +800,7 @@ components:
           type: string
     QueueEntry:
       type: object
+      additionalProperties: false
       required:
         - song
         - userName
@@ -804,6 +812,7 @@ components:
           type: string
     UserInfo:
       type: object
+      additionalProperties: false
       required:
         - name
         - permissions
@@ -818,6 +827,7 @@ components:
             $ref: '#/components/schemas/Permission'
     RegisterCredentials:
       type: object
+      additionalProperties: false
       required:
         - name
         - userId
@@ -832,6 +842,7 @@ components:
           type: string
     PasswordChange:
       type: object
+      additionalProperties: false
       required:
         - newPassword
       properties:
@@ -840,6 +851,7 @@ components:
           type: string
     AuthExpectation:
       type: object
+      additionalProperties: false
       required:
         - format
       properties:
@@ -865,6 +877,7 @@ components:
             type: string
     Volume:
       type: object
+      additionalProperties: false
       description: >
         Information about the bot volume.
       required:
@@ -881,6 +894,7 @@ components:
           type: boolean
     Tokens:
       type: object
+      additionalProperties: false
       description: >
         An access token and optionally a refresh token.
       required:
