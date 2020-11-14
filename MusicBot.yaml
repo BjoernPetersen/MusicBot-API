@@ -919,7 +919,7 @@ components:
         ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
         CHANGE_VOLUME -> Allows to change the playback volume;
         EXIT -> Allows sending a shutdown signal to the bot;
-        MANAGE_USERS -> Allows deleting or altering other users and their permissions;
+        ADMIN -> Allows deleting or altering other users and their permissions. Granting a user the admin permission will automatically grant him all other current permissions. Users holding the admin permission can not alter the permissions of other admins;
       enum:
         - skip
         - dislike
@@ -929,7 +929,7 @@ components:
         - alter_suggestions
         - change_volume
         - exit
-        - manage_users
+        - admin
 
   securitySchemes:
     Token:
