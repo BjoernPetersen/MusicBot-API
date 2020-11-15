@@ -150,6 +150,9 @@ paths:
       summary: Deletes a selected user
       description: >
         Deletes the user defined in path
+
+        Users holding the ADMIN permission may delete all users except other ADMINs and OWNERs.
+        OWNERs may delete all other users.
       parameters:
         - name: username
           in: path
@@ -174,6 +177,9 @@ paths:
         Updates a user's permissions.
         Permissions omitted in the request will be dropped if owned by the user previously.
         The update will reach the user when he updates his JWT token.
+
+        Users holding the ADMIN permission may change permissions of all users except other ADMINs and OWNERs.
+        OWNERs may change permission of all other users.
       parameters:
         - name: username
           in: path
@@ -925,6 +931,7 @@ components:
         ADMIN -> Allows deleting or altering other users and their permissions.
           Granting a user the admin permission will automatically grant him all other current permissions.
           Users holding the admin permission can not alter the permissions of other admins;
+        OWNER -> Allows altering permissions or deleting users holding the ADMIN or OWNER permission.
       enum:
         - skip
         - dislike
@@ -935,6 +942,7 @@ components:
         - change_volume
         - exit
         - admin
+        - owner
 
   securitySchemes:
     Token:
