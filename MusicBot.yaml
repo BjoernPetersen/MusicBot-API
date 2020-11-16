@@ -161,7 +161,7 @@ paths:
           description: The user to delete
           required: true
       responses:
-        201:
+        204:
           description: The deletion was successful
         401:
           $ref: "#/components/responses/Unauthenticated"
@@ -195,7 +195,7 @@ paths:
               items:
                 $ref: '#/components/schemas/Permission'
       responses:
-        201:
+        204:
           description: The update was successful
         401:
           $ref: "#/components/responses/Unauthenticated"
@@ -929,8 +929,8 @@ components:
         CHANGE_VOLUME -> Allows to change the playback volume;
         EXIT -> Allows sending a shutdown signal to the bot;
         ADMIN -> Allows deleting or altering other users and their permissions.
-          Granting a user the admin permission will automatically grant him all other current permissions.
-          Users holding the admin permission can not alter the permissions of other admins;
+          Granting a user the admin permission will automatically grant him all other current permissions except OWNER.
+          Users holding the admin permission can not alter the permissions of or delete other admins;
         OWNER -> Allows altering permissions or deleting users holding the ADMIN or OWNER permission.
       enum:
         - skip
