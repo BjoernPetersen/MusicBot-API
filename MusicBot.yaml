@@ -931,7 +931,7 @@ components:
         ADMIN -> Allows deleting or altering other users (except OWNERs) and their permissions.
           Granting a user the admin permission will automatically grant him all other current permissions except OWNER.
           Users holding the admin permission can not alter the permissions of or delete other admins;
-        OWNER -> Allows altering permissions or deleting users holding the ADMIN or OWNER permission.
+        OWNER -> Allows granting the ADMIN permission, altering permissions of admins and owners or deleting ADMIN or OWNER users.
       enum:
         - skip
         - dislike
