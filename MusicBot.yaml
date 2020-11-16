@@ -117,6 +117,113 @@ paths:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+  "/user/{username}":
+    get:
+      operationId: getUser
+      summary: Retrieves information about a user
+      description: >
+        Returns information about the user specified in the path.
+        Permission information about the user reflects the current state of the bot,
+        permissions saved in still valid JWT tokens may vary.
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to retrieve. Usernames are case-insensitive
+          required: true
+      responses:
+        200:
+          description: Information about the user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+    delete:
+      operationId: deleteOtherUser
+      summary: Deletes a selected user
+      description: >
+        Deletes the user defined in path
+
+        Users holding the ADMIN permission may delete all users except other ADMINs and OWNERs.
+        OWNERs may delete all other users.
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to delete
+          required: true
+      responses:
+        204:
+          description: The deletion was successful
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+  "/user/{username}/permission":
+    put:
+      operationId: setUserPermissions
+      summary: Set a user's permissions
+      description: >
+        Updates a user's permissions.
+        Permissions omitted in the request will be dropped if owned by the user previously.
+        The update will reach the user when he updates his JWT token.
+
+        Users holding the ADMIN permission may change permissions of all users except other ADMINs and OWNERs.
+        OWNERs may change permission of all other users.
+      parameters:
+        - name: username
+          in: path
+          schema:
+            type: string
+          description: The user to update. Usernames are case-insensitive
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Permission'
+      responses:
+        204:
+          description: The update was successful
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: The user does not exist
+  /users:
+    get:
+      operationId: getUsers
+      summary: Retrieve all users
+      description: >
+        Retrieves information about all full users.
+        Permission information about users reflects the current state of the bot,
+        permissions saved in still valid JWT tokens may vary.
+      responses:
+        200:
+          description: A list of user information
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/UserInfo'
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
   /token:
     get:
       operationId: loginUser
@@ -725,7 +832,7 @@ components:
           description: A list of permission identifiers for this user.
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Permission'
     RegisterCredentials:
       type: object
       additionalProperties: false
@@ -809,6 +916,34 @@ components:
         refreshToken:
           description: A long-lived opaque token to refresh the access token.
           type: string
+    Permission:
+      type: string
+      description: >
+        SKIP -> The permission to skip the current song or remove songs from the queue.
+          Note that a user is always allowed to remove a song from the queue which he added himself.;
+        DISLIKE -> The permission to remove songs from the upcoming suggestions of a suggester;
+        MOVE -> Users with this permission can alter the queue order;
+        PAUSE -> Allows pausing/resuming the playback;
+        ENQUEUE -> Allows enqueueing songs;
+        ALTER_SUGGESTIONS -> Enquing a song while holding this permission will give feedback to suggesters
+        CHANGE_VOLUME -> Allows to change the playback volume;
+        EXIT -> Allows sending a shutdown signal to the bot;
+        ADMIN -> Allows deleting or altering other users (except OWNERs) and their permissions.
+          Granting a user the admin permission will automatically grant him all other current permissions except OWNER.
+          Users holding the admin permission can not alter the permissions of or delete other admins;
+        OWNER -> Allows granting the ADMIN permission, altering permissions of admins and owners or
+          deleting ADMIN or OWNER users.
+      enum:
+        - skip
+        - dislike
+        - move
+        - pause
+        - enqueue
+        - alter_suggestions
+        - change_volume
+        - exit
+        - admin
+        - owner
 
   securitySchemes:
     Token:
