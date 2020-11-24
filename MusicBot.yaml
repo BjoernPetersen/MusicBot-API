@@ -639,9 +639,9 @@ paths:
                 $ref: "#/components/schemas/Volume"
     put:
       operationId: setVolume
-      summary: Sets the current volume.
+      summary: Sets the master volume.
       description: >
-        Changes the current volume. The exact effect this will have may vary with bot configuration.
+        Changes the current master volume. The exact effect this will have may vary with bot configuration.
         Calling this endpoint may even have no effect at all, which will be reflected by the response.
         Requires "change_volume" permission.
       parameters:
@@ -662,6 +662,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Volume"
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+  /volume/{id}:
+    put:
+      operationId: setSpeakerVolume
+      summary: Sets the volume for a specific speaker
+      description: >
+        Changes the current volume for the speaker defined by {id}.
+        The exact effect this will have may vary with bot configuration.
+        Changing this value might change the current master volume.
+        Calling this endpoint may even have no effect at all, which will be reflected by the response.
+        Requires "change_volume" permission.
+      parameters:
+        - name: id
+          in: path
+          description: A speaker ID
+          schema:
+            type: string
+          required: true
+        - name: value
+          in: query
+          required: true
+          description: The new volume between 0 and 100.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+      responses:
+        200:
+          description: >
+            The new volume information. Note that this might not reflect the requested value if volume control is
+            unsupported by the bot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Volume"
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: Speaker not found.
 
 components:
   schemas:
@@ -889,17 +933,47 @@ components:
       description: >
         Information about the bot volume.
       required:
-        - volume
+        - master
         - isSupported
       properties:
-        volume:
-          description: The volume between 0 and 100.
+        master:
+          description: >
+            The master volume between 0 and 100.
+            If only a single audio device is used, only this property will be available.
+            In a setup with multiple speakers this property represents the group volume.
           type: integer
           minimum: 0
           maximum: 100
+        speakers:
+          description: Volume of individual speakers to control
+          type: array
+          items:
+            $ref: '#/components/schemas/Speaker'
         isSupported:
           description: Whether volume control is actually supported by the bot.
           type: boolean
+    Speaker:
+      type: object
+      additionalProperties: false
+      description: >
+        A loudspeaker whose volume can be controlled
+      required:
+        - volume
+        - id
+      properties:
+        volume:
+          description: A volume between 0 and 100.
+          type: integer
+          minimum: 0
+          maximum: 100
+        id:
+          description: A unique name for the speaker
+          type: string
+        name:
+          description: >
+            A pretty name for the speaker.
+            If not provided, the ID will be used.
+          type: string
     Tokens:
       type: object
       additionalProperties: false
