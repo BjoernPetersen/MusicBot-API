@@ -671,7 +671,8 @@ paths:
       operationId: setSpeakerVolume
       summary: Sets the volume for a specific speaker
       description: >
-        Changes the current volume for the speaker defined by {id}. The exact effect this will have may vary with bot configuration.
+        Changes the current volume for the speaker defined by {id}.
+        The exact effect this will have may vary with bot configuration.
         Changing this value might change the current master volume.
         Calling this endpoint may even have no effect at all, which will be reflected by the response.
         Requires "change_volume" permission.
