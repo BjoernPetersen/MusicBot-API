@@ -224,6 +224,113 @@ paths:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+  /config:
+    get:
+      operationId: getConfigEntities
+      summary: Returns lists of all configurable entities.
+      description: >
+        Retrieves all configurable entities ordered by type.
+        Requires the "config" permission.
+      responses:
+        200:
+          description: Lists of all configurable entities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generic:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NamedPlugin'
+                  provider:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NamedPlugin'
+                  suggester:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NamedPlugin'
+                  playback:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NamedPlugin'
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+  "/config/{configurable}":
+    get:
+      operationId: getConfig
+      summary: Retrieve the current configuration for a configurable entity
+      description: >
+        Return all configuration entries for a configurable entity
+      parameters:
+        - name: configurable
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The entity to retrieve the configuration for.
+      responses:
+        200:
+          description: A list of all configuration entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  entity:
+                    $ref: '#/components/schemas/NamedPlugin'
+                  configuration:
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: '#/components/schemas/StringConfigEntry'
+                        - $ref: '#/components/schemas/IntegerConfigEntry'
+                        - $ref: '#/components/schemas/FloatConfigEntry'
+                        - $ref: '#/components/schemas/BooleanConfigEntry'
+                        - $ref: '#/components/schemas/SelectionConfigEntry'
+                      discriminator:
+                        propertyName: entryType
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: Unknown entity
+    put:
+      operationId: updateConfig
+      summary: Update the configuratin of a configurable entity
+      description: >
+        Overwrite the configuration for a configurable entity.
+        Missing configuration entries will keep their current value.
+        If the request contains an invalid configuration no changes will be 
+        applied.
+        Depending on the implementation and entity applying the config may
+        require a restart of the musicbot instance
+        If the bot is not able to restart after applying the changes it will
+        try to rollback the last change.
+        Requires the "config" permission.
+      parameters:
+        - name: configurable
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The entity to retrieve the configuration for.
+      responses:
+        201:
+          description: Accepted
+        400:
+          description: Invalid configuration
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: Unknown entity
+      
   /token:
     get:
       operationId: loginUser
@@ -704,7 +811,151 @@ components:
           description: URL to the project website.
           example: https://github.com/BjoernPetersen/MusicBot-desktop
           type: string
-
+    StringConfigEntry:
+      description: A stringified config entry
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [string]
+        value:
+          type: string
+        allowEmpty:
+          type: boolean
+    IntegerConfigEntry:
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [integer]
+        value:
+          type: integer
+        min:
+          type: integer
+        max:
+          type: integer
+    FloatConfigEntry:
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [float]
+        value:
+          type: number
+        min:
+          type: number
+        max:
+          type: number
+    BooleanConfigEntry:
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [boolean]
+        value:
+          type: boolean
+    SelectionConfigEntry:
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - allowedValues
+        - selectionType
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [selection]
+        value:
+          type: string
+        allowedValues:
+          type: array
+          items:
+            type: string
+        selectionType:
+          type: string
+          description: >
+            Describes if one or any number of allowed values can be selected.
+          enum: [
+            any,
+            one
+          ]
     NamedPlugin:
       type: object
       additionalProperties: false
@@ -934,6 +1185,7 @@ components:
           Admins can neither grant or revoke the ADMIN or OWNER permission.
         OWNER -> Allows granting and revoking the ADMIN and OWNER permissions, altering permissions of and deleting
           any user. Granting a user the owner permission will automatically grant him all other current permissions.
+        CONFIG -> Allows retrieving and updating the configuration of the musicbot instance
       enum:
         - skip
         - dislike
@@ -945,6 +1197,7 @@ components:
         - exit
         - admin
         - owner
+        - config
 
   securitySchemes:
     Token:
