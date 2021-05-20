@@ -326,6 +326,20 @@ paths:
             type: string
           required: true
           description: The entity to retrieve the configuration for.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                oneOf:
+                  - $ref: "#/components/schemas/StringConfigEntry"
+                  - $ref: "#/components/schemas/IntegerConfigEntry"
+                  - $ref: "#/components/schemas/FloatConfigEntry"
+                  - $ref: "#/components/schemas/BooleanConfigEntry"
+                  - $ref: "#/components/schemas/SelectionConfigEntry"
+                discriminator:
+                  propertyName: entryType
       responses:
         201:
           description: Accepted
