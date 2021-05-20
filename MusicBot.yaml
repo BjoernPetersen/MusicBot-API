@@ -972,8 +972,13 @@ components:
           type: string
           enum: [selection]
         value:
-          type: string
+          description: Value of the config entry
+          type: array
+          items:
+            type: string
         allowedValues:
+          description: >
+            An array containing values that are allowed for this config entry.
           type: array
           items:
             type: string
