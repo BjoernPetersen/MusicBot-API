@@ -280,6 +280,13 @@ paths:
               schema:
                 type: object
                 properties:
+                  staging:
+                    type: boolean
+                    default: false
+                    description: >
+                      Returns true if the configuration has been changed since
+                      the last restart of the musicbot instance.
+                      This implies that changes may not yet be effective.
                   entity:
                     $ref: "#/components/schemas/NamedPlugin"
                   configuration:
