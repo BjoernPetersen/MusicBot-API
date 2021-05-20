@@ -841,7 +841,8 @@ components:
             to make the bot operational.
           type: boolean
     StringConfigEntry:
-      description: A stringified config entry
+      description: >
+        A config entry with a string value.
       type: object
       additionalProperties: false
       required:
@@ -865,9 +866,13 @@ components:
           enum: [string]
         value:
           type: string
+          description: Value of the config entry
         allowEmpty:
           type: boolean
+          description: Wether an empty string is allowed for this config entry
     IntegerConfigEntry:
+      description: >
+        A config entry with an integer value. Min and max limits may be specified.
       type: object
       additionalProperties: false
       required:
@@ -891,11 +896,18 @@ components:
           enum: [integer]
         value:
           type: integer
+          description: Value of the config entry
         min:
           type: integer
+          description: Lower bound of valid config entries
+          example: 0
         max:
           type: integer
+          description: Upper bound of valid config entries
+          example: 100
     FloatConfigEntry:
+      description: >
+        A config entry with a float value. Min and max limits may be specified.
       type: object
       additionalProperties: false
       required:
@@ -919,11 +931,18 @@ components:
           enum: [float]
         value:
           type: number
+          description: Value of the config entry
         min:
           type: number
+          description: Lower bound of valid config entries
+          example: 0.1
         max:
           type: number
+          description: Upper bound of valid config entries
+          example: 0.9
     BooleanConfigEntry:
+      description: >
+        A config entry with an boolean value.
       type: object
       additionalProperties: false
       required:
@@ -947,7 +966,10 @@ components:
           enum: [boolean]
         value:
           type: boolean
+          description: Value of the config entry
     SelectionConfigEntry:
+      description: >
+        A config entry with predefined values.
       type: object
       additionalProperties: false
       required:
