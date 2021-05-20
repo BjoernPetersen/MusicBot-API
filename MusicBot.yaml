@@ -831,6 +831,15 @@ components:
           description: URL to the project website.
           example: https://github.com/BjoernPetersen/MusicBot-desktop
           type: string
+        setup:
+          description: >
+            Wether the bot instance has been setup.
+            If this value is set to false the instance has not been setup yet.
+            In this case the first call to 'POST /user' will create a persistent
+            account with "OWNER" permissions. It is advised to follow the user
+            creation with a setup wizard, as subsequent configurations are needed
+            to make the bot operational.
+          type: boolean
     StringConfigEntry:
       description: A stringified config entry
       type: object
