@@ -305,7 +305,7 @@ paths:
       description: >
         Overwrite the configuration for a configurable entity.
         Missing configuration entries will keep their current value.
-        If the request contains an invalid configuration no changes will be 
+        If the request contains an invalid configuration no changes will be
         applied.
         Depending on the implementation and entity applying the config may
         require a restart of the musicbot instance
@@ -330,7 +330,6 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         404:
           description: Unknown entity
-      
   /token:
     get:
       operationId: loginUser
