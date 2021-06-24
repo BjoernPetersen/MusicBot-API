@@ -229,7 +229,7 @@ paths:
       operationId: getConfigEntities
       summary: Returns lists of all configurable entities.
       description: >
-        Retrieves all configurable entities ordered by type.
+        Retrieves all configurable entities grouped by plugin type.
         Requires the "config" permission.
       responses:
         200:
@@ -311,7 +311,7 @@ paths:
       summary: Update the configuratin of a configurable entity
       description: >
         Overwrite the configuration for a configurable entity.
-        Missing configuration entries int the request body will keep
+        Omitted configuration entries in the request body will keep
         their current value.
         If the request contains an invalid configuration no changes will be
         applied.
@@ -319,7 +319,7 @@ paths:
         require a restart of the musicbot instance, which is displayed by
         the staging flag in response of the "GET /config/{configurable}" endpoint.
         If the bot is not able to restart after applying the changes it will
-        try to rollback the last change.
+        try to rollback the pending configuration.
         Requires the "config" permission.
       parameters:
         - name: configurable
@@ -837,10 +837,10 @@ components:
           description: >
             Wether the bot instance has been setup.
             If this value is set to false the instance has not been setup yet.
-            In this case the first call to 'POST /user' will create a persistent
-            account with "OWNER" permissions. It is advised to follow the user
-            creation with a setup wizard, as subsequent configurations are needed
-            to make the bot operational.
+            In this case the first call to 'PUT /user' will create a persistent
+            account for the current user with "OWNER" permissions.
+            It is advised to follow the user creation with a setup wizard, as 
+            subsequent configurations are needed to make the bot operational.
           type: boolean
     StringConfigEntry:
       description: >
