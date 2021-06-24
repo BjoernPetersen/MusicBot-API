@@ -839,7 +839,7 @@ components:
             If this value is set to false the instance has not been setup yet.
             In this case the first call to 'PUT /user' will create a persistent
             account for the current user with "OWNER" permissions.
-            It is advised to follow the user creation with a setup wizard, as 
+            It is advised to follow the user creation with a setup wizard, as
             subsequent configurations are needed to make the bot operational.
           type: boolean
     StringConfigEntry:
