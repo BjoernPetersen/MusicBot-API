@@ -193,7 +193,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Permission'
+                $ref: "#/components/schemas/Permission"
       responses:
         204:
           description: The update was successful
@@ -219,11 +219,140 @@ paths:
               schema:
                 type: array
                 items:
-                    $ref: '#/components/schemas/UserInfo'
+                  $ref: "#/components/schemas/UserInfo"
         401:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+  /config:
+    get:
+      operationId: getConfigEntities
+      summary: Returns lists of all configurable entities.
+      description: >
+        Retrieves all configurable entities grouped by plugin type.
+        Requires the "config" permission.
+      responses:
+        200:
+          description: Lists of all configurable entities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  generic:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NamedPlugin"
+                  provider:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NamedPlugin"
+                  suggester:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NamedPlugin"
+                  playback:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NamedPlugin"
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+  "/config/{configurable}":
+    get:
+      operationId: getConfig
+      summary: Retrieve the current configuration for a configurable entity
+      description: >
+        Return all configuration entries for a configurable entity
+      parameters:
+        - name: configurable
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The entity to retrieve the configuration for.
+      responses:
+        200:
+          description: A list of all configuration entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  staging:
+                    type: boolean
+                    default: false
+                    description: >
+                      Returns true if the configuration has been changed since
+                      the last restart of the musicbot instance.
+                      This implies that changes may not yet be effective.
+                  entity:
+                    $ref: "#/components/schemas/NamedPlugin"
+                  configuration:
+                    type: array
+                    items:
+                      oneOf:
+                        - $ref: "#/components/schemas/StringConfigEntry"
+                        - $ref: "#/components/schemas/IntegerConfigEntry"
+                        - $ref: "#/components/schemas/FloatConfigEntry"
+                        - $ref: "#/components/schemas/BooleanConfigEntry"
+                        - $ref: "#/components/schemas/SelectionConfigEntry"
+                      discriminator:
+                        propertyName: entryType
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: Unknown entity
+    put:
+      operationId: updateConfig
+      summary: Update the configuratin of a configurable entity
+      description: >
+        Overwrite the configuration for a configurable entity.
+        Omitted configuration entries in the request body will keep
+        their current value.
+        If the request contains an invalid configuration no changes will be
+        applied.
+        Depending on the implementation and entity applying the config may
+        require a restart of the musicbot instance, which is displayed by
+        the staging flag in response of the "GET /config/{configurable}" endpoint.
+        If the bot is not able to restart after applying the changes it will
+        try to rollback the pending configuration.
+        Requires the "config" permission.
+      parameters:
+        - name: configurable
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The entity to retrieve the configuration for.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                oneOf:
+                  - $ref: "#/components/schemas/StringConfigEntry"
+                  - $ref: "#/components/schemas/IntegerConfigEntry"
+                  - $ref: "#/components/schemas/FloatConfigEntry"
+                  - $ref: "#/components/schemas/BooleanConfigEntry"
+                  - $ref: "#/components/schemas/SelectionConfigEntry"
+                discriminator:
+                  propertyName: entryType
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: Invalid configuration
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          description: Unknown entity
   /token:
     get:
       operationId: loginUser
@@ -704,7 +833,184 @@ components:
           description: URL to the project website.
           example: https://github.com/BjoernPetersen/MusicBot-desktop
           type: string
-
+        setup:
+          description: >
+            Wether the bot instance has been setup.
+            If this value is set to false the instance has not been setup yet.
+            In this case the first call to 'PUT /user' will create a persistent
+            account for the current user with "OWNER" permissions.
+            It is advised to follow the user creation with a setup wizard, as
+            subsequent configurations are needed to make the bot operational.
+          type: boolean
+    StringConfigEntry:
+      description: >
+        A config entry with a string value.
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [string]
+        value:
+          type: string
+          description: Value of the config entry
+        allowEmpty:
+          type: boolean
+          description: Wether an empty string is allowed for this config entry
+    IntegerConfigEntry:
+      description: >
+        A config entry with an integer value. Min and max limits may be specified.
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [integer]
+        value:
+          type: integer
+          description: Value of the config entry
+        min:
+          type: integer
+          description: Lower bound of valid config entries
+          example: 0
+        max:
+          type: integer
+          description: Upper bound of valid config entries
+          example: 100
+    FloatConfigEntry:
+      description: >
+        A config entry with a float value. Min and max limits may be specified.
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [float]
+        value:
+          type: number
+          description: Value of the config entry
+        min:
+          type: number
+          description: Lower bound of valid config entries
+          example: 0.1
+        max:
+          type: number
+          description: Upper bound of valid config entries
+          example: 0.9
+    BooleanConfigEntry:
+      description: >
+        A config entry with an boolean value.
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [boolean]
+        value:
+          type: boolean
+          description: Value of the config entry
+    SelectionConfigEntry:
+      description: >
+        A config entry with predefined values.
+      type: object
+      additionalProperties: false
+      required:
+        - entryType
+        - value
+        - allowedValues
+        - selectionType
+        - key
+      properties:
+        key:
+          description: |
+            A key for the entry. If no label is provided, this will also be
+            used as label.
+          type: string
+        label:
+          description: |
+            A user friendly name to display to the user.
+          type: string
+        entryType:
+          description: |
+            Defines the configuration type.
+          type: string
+          enum: [selection]
+        value:
+          description: Value of the config entry
+          type: array
+          items:
+            type: string
+        allowedValues:
+          description: >
+            An array containing values that are allowed for this config entry.
+          type: array
+          items:
+            type: string
+        selectionType:
+          type: string
+          description: >
+            Describes if one or any number of allowed values can be selected.
+          enum: [any, one]
     NamedPlugin:
       type: object
       additionalProperties: false
@@ -832,7 +1138,7 @@ components:
           description: A list of permission identifiers for this user.
           type: array
           items:
-            $ref: '#/components/schemas/Permission'
+            $ref: "#/components/schemas/Permission"
     RegisterCredentials:
       type: object
       additionalProperties: false
@@ -934,6 +1240,7 @@ components:
           Admins can neither grant or revoke the ADMIN or OWNER permission.
         OWNER -> Allows granting and revoking the ADMIN and OWNER permissions, altering permissions of and deleting
           any user. Granting a user the owner permission will automatically grant him all other current permissions.
+        CONFIG -> Allows retrieving and updating the configuration of the musicbot instance
       enum:
         - skip
         - dislike
@@ -945,6 +1252,7 @@ components:
         - exit
         - admin
         - owner
+        - config
 
   securitySchemes:
     Token:
